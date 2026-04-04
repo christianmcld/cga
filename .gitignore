@@ -1,0 +1,11 @@
+# Per-business environments are NOT part of the skill repo
+# They live at ~/.claude/cga/{slug}/ and are created during onboarding
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
