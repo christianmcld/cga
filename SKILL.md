@@ -432,3 +432,69 @@ After every meaningful action, update the relevant state files. CGA is a statefu
 ```
 
 If you're unsure whether something is worth logging: log it. A noisy log is better than a silent one.
+
+---
+
+## 12. Weekly Recon — Self-Updating Knowledge Base
+
+The CGA's technical knowledge must stay current. Platforms change algorithms, new MCP servers launch, free APIs appear, and tools get patched — weekly.
+
+### What the CGA Should Research Weekly
+
+When the user runs `/cga recon` or when a scheduled agent triggers this:
+
+**1. MCP Servers (Broad — not just Claude.ai built-in)**
+Search for ALL MCP servers globally, including community-built and third-party:
+- `awesome-mcp-servers` on GitHub — the community maintains curated lists
+- GitHub topics tagged `mcp-server`
+- npm packages tagged `mcp`
+- MCP servers for: Google Workspace, Slack, Discord, Airtable, Supabase, Firebase, Twilio, SendGrid, Mailchimp, HubSpot, Salesforce, Shopify, WooCommerce, WordPress, Webflow, Substack, Beehiiv, ConvertKit, n8n, Linear, Jira, Asana, Calendly, Zoom, Google Ads, Meta Ads, TikTok Ads, LinkedIn Ads, YouTube, SEO tools (Ahrefs, SEMrush), CRM tools, payment processors, cloud providers
+- Specific searches: `fal.ai MCP`, `apify MCP`, `google workspace MCP`, `GoHighLevel MCP`, `instantly MCP`, `apollo MCP`
+
+**2. Free APIs and Tools**
+- New free API tiers launched (Product Hunt, dev newsletters, Hacker News)
+- New automation tools with free tiers
+- Changes to existing free tiers (upgrades or downgrades)
+
+**3. Platform Algorithm Changes**
+- Instagram, TikTok, YouTube, LinkedIn, X/Twitter, Pinterest
+- New features that can be exploited for distribution
+- Algorithm changes that affect content reach
+- Policy changes that affect growth tactics
+- Rate limit changes on platform APIs
+
+**4. New Automation Capabilities**
+- AI tools that enable new robot building (video clipping, content generation, outreach)
+- Browser automation changes
+- Scheduling and webhook tools
+
+### How to Update
+
+Update these files in the skill repo:
+- `references/technical-inventory.md` — new MCP servers, APIs, tools
+- `references/tactics/pull/platform-exploits-2025.md` — platform changes and exploits
+
+Format new entries under a dated header:
+```
+## Week of YYYY-MM-DD
+### New MCP Servers
+- **[Name]** — what it connects to, install command, growth robot potential
+
+### Platform Changes
+- **[Platform]: [Change]** — hat color, robot opportunity, viability
+
+### New Tools
+- **[Tool]** — what it does, free tier, robot potential
+```
+
+Commit and push with: `chore: weekly CGA recon — YYYY-MM-DD`
+
+### Setting Up Automated Recon
+
+Users who want automatic weekly updates can set up a scheduled remote agent:
+1. Use Claude Code's `/schedule` command
+2. Schedule: every Friday at 9am local time
+3. Point it at their CGA repo fork
+4. The agent will research, update files, commit, and push
+
+This keeps the CGA's technical knowledge fresh without manual effort. The more current the technical inventory, the more practical the growth robot designs.
