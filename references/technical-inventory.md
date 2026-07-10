@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-07-03
+**Last updated:** 2026-07-10
+
+---
+
+## Week of 2026-07-10 — Recon Summary
+
+**Major finds this week:** MCP spec 2026-07-28 RC drops — stateless protocol, MCP Apps (server-rendered UIs), Tasks extension, formal 12-month deprecation policy. Five new MCP servers confirmed: Meta Ads (official, 29 tools), Calendly (official, 35 tools, hosted), ClickUp (official public beta, all plans), Postmark by ActiveCampaign (24 tools, open source). Meta comprehensive community MCP at 200+ tools. OpenAI deprecation wave accelerating: `gpt-4`, `o1`, `gpt-3.5-turbo`, `o3-mini`, `o4-mini` all killed Oct 23, 2026. Claude API rate limits raised — Sonnet/Haiku now match Opus; `claude-opus-4-7` fast mode deprecated July 24. LinkedIn native vertical video getting 38% engagement / 42% visibility boost. X article links from Substack/Medium now specifically boosted by Grok-powered feed.
 
 ---
 
@@ -30,6 +36,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 ### CRM & Sales Intelligence
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
+| **Calendly** ⭐ NEW (OFFICIAL) | 35 scheduling and org-management tools — availability, event types, booking, meeting management. Fully hosted by Calendly. OAuth 2.1 + Dynamic Client Registration (no pre-registration needed) | Meeting booking robot, availability management, event type automation, org-wide scheduling workflows | Remote hosted: `https://mcp.calendly.com` (GA Feb 2026, announced Mar 11, 2026) |
 | **GoHighLevel (GHL)** ⭐ NEW (OFFICIAL) | Contacts, calendar, conversations, opportunities, payments, sub-accounts — full CRM | Full CRM automation, pipeline robots, SMS/email from AI, location management | Remote: `https://services.leadconnectorhq.com/mcp/` (free on Unlimited+ plans) |
 | **HubSpot** ⭐ NEW | Contacts, companies, deals, tickets, notes, lists — read + write | Lead management, deal tracking, contact enrichment, CRM robots | Remote OAuth: `https://mcp.hubspot.com` (GA Q4 2025) |
 | **Salesforce** ⭐ NEW | Accounts, opportunities, leads, contacts, custom objects, SOQL queries | Enterprise CRM automation, pipeline management | Remote: enable in Salesforce Setup; or `npx @salesforce/mcp` (GA April 2026) |
@@ -38,6 +45,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 ### Email, Outreach & Messaging
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
+| **Postmark (by ActiveCampaign)** ⭐ NEW (OFFICIAL) | 24 tools: single + batch email sending (up to 500/call), template CRUD + validation, message search, delivery diagnostics (diagnoseDelivery tool), bounce management, suppression lists, webhooks, server info. Open source MIT. | Transactional email robot — send AI-drafted emails, diagnose deliverability, manage templates, bulk sends | Clone: `github.com/ActiveCampaign/postmark-mcp` (requires Postmark API key) |
 | **Klaviyo** | Email marketing, campaigns, segments, profiles | Email robots, list management, campaign automation | Native |
 | **Beehiiv** ⭐ NEW | Subscriber analytics, publication stats, post management, audience segmentation | Newsletter growth robot, audience analysis, post scheduling | Remote OAuth (enable in Beehiiv settings); or `npx -y beehiiv-mcp-server` (GA March 2026) |
 | **Instantly.ai** ⭐ NEW | Campaigns, leads, accounts, analytics — 31 tools | Cold email robot — create campaigns, add leads, track performance | `pip install instantly-mcp` (requires Instantly API key) |
@@ -57,6 +65,8 @@ These are live connections the CGA can use during sessions to pull data, push co
 ### Social Media
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
+| **Meta Ads (Official)** ⭐ NEW (OFFICIAL) | 29 tools — campaign creation/management, ad groups, creatives, audience targeting, catalog management, performance analytics, insights. Standard Business OAuth. Open beta as of Apr 29, 2026. Works across Facebook + Instagram Ads Manager. | Full Meta Ads robot — create campaigns, manage budgets, monitor ROAS, generate creative variations, audience management | Remote: Meta Ads Connectors in Business Suite (no developer app needed); or community: `github.com/pipeboard-co/meta-ads-mcp` |
+| **Meta Comprehensive (Community)** ⭐ NEW | 200+ tools: Facebook Pages, Instagram, Threads, Ads Manager, Commerce, Conversions API, Custom Audiences, Insights, Ad Library | Full Meta platform robot — organic + paid, organic posting on Pages/IG/Threads plus ad ops in one server | `github.com/oliverames/meta-mcp-server` (community, MIT) |
 | **X (Twitter)** ⭐ NEW (OFFICIAL) | 200+ endpoints — search, timelines, user lookups, DMs, lists (read-heavy; write endpoints NOT exposed) | Social listening, trend monitoring, audience research. Note: cannot post via this MCP | Remote OAuth: `https://developer.x.com/en/products/x-api/mcp` (Launched June 30, 2026) |
 | **TikTok Ads** ⭐ NEW | Campaign management, ad groups, creatives, audience targeting, performance analytics | TikTok ad campaign robot, performance monitoring, creative management | `pip install tiktok-ads-mcp` (requires TikTok Business API access) |
 | **Reddit** ⭐ NEW | Read subreddits, posts, comments, search, user profiles, hot/new/top feeds | Community monitoring, trend detection, social listening robot | `npx reddit-mcp-server` (requires Reddit API credentials) |
@@ -70,6 +80,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 ### Project Management
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
+| **ClickUp** ⭐ NEW (OFFICIAL, PUBLIC BETA) | Task management with assignees/priorities/due dates, time tracking (start/stop timers, log entries), Docs read/write, comment summarization, executive report generation. Available on all plans. Rate limits: 50 calls/24h (Free), 300 calls/24h (Unlimited+); unlimited with Everything AI add-on. | Project management robot, release notes, status reports, task creation from AI conversations, time tracking | In-app: ClickUp Settings → Integrations → MCP; or `claude mcp add clickup` pointing to ClickUp's hosted endpoint |
 | **Atlassian (Jira + Confluence + Bitbucket)** ⭐ NEW | Rovo search across Jira/Confluence, create/update issues and epics, Confluence pages, semantic search | Project management robot, issue tracking, documentation automation | Remote OAuth: `https://mcp.atlassian.com` (GA Feb 4, 2026; free for all Atlassian Cloud customers) |
 
 ### Infrastructure & Deployment
@@ -102,6 +113,23 @@ These are live connections the CGA can use during sessions to pull data, push co
 
 ---
 
+---
+
+## MCP Protocol — 2026-07-28 Release Candidate (Spec Changes)
+
+> **Shipping July 28, 2026.** Biggest spec revision since MCP launched. Affects how servers are deployed and what capabilities they can expose.
+
+| Change | What It Means | Action Required |
+|--------|--------------|-----------------|
+| **Stateless protocol core** | `Mcp-Session-Id` header removed; `initialize/initialized` handshake eliminated. Client capabilities travel inline in `_meta` field on each request | Servers can now run behind plain round-robin load balancers — no sticky sessions, no shared session stores |
+| **MCP Apps (SEP-1865)** | Servers can ship interactive HTML UIs rendered in sandboxed iframes inside the host client. Tools declare UI templates ahead of time for caching/security review | New surface: build dashboards, data entry forms, and rich UIs delivered via MCP — not just text output |
+| **Tasks Extension** | Replaces the experimental Tasks core feature from 2025-11-25. `tools/call` can return a task handle; client drives with `tasks/get`, `tasks/update`, `tasks/cancel` | Build long-running robots (crawls, batch sends, report generation) with proper lifecycle management |
+| **Extensions Framework** | New capabilities ship as opt-in extensions before (possibly never) moving into the spec core | Watch extension registry for community-built extensions like payments, streaming, specialized tool types |
+| **Deprecation Policy** | Formal 12-month deprecation lifecycle: Active → Deprecated → Removed. Three features entering deprecation now: Roots (replaced by tool params), Sampling (call LLM API directly), Logging (use stderr or OpenTelemetry) | Stop using MCP Sampling; stop relying on Roots; route logs to stderr or OTel |
+| **Authorization hardening** | OAuth + OIDC alignment; Dynamic Client Registration (RFC 7591) becomes standard pattern | Self-registering clients (no pre-registered app IDs) are now the norm — see Calendly MCP as example |
+
+---
+
 ## API Keys Available (Local)
 
 | API | Key Status | What It Enables |
@@ -117,6 +145,22 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Google AI Studio** | Active | Gemini models, Nano Banana image gen |
 | **Stripe** | Active (Live) | Payment processing, subscription management |
 | **Plaid** | Pending (dev access) | Bank account connections, expense tracking |
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-07-10)
+
+> New entries this week:
+
+| API / Service | What Changed | Effective Date | Action Required |
+|---|---|---|---|
+| **OpenAI `computer-use-preview`** | Shut down | **Jul 23, 2026** | Remove from any automation using this model |
+| **OpenAI `gpt-4`, `gpt-3.5-turbo`, `o1`, `o3-mini`, `o4-mini`** | API access removed — calls return errors after deadline | **Oct 23, 2026** | Migrate to GPT-4.1, o3, or o4 now; audit all routing configs |
+| **OpenAI older GPT-5 + o3 snapshots** | Deprecated Jun 11, 2026; removed Dec 11, 2026 | **Dec 11, 2026** | Pin to latest stable snapshot IDs, not dated snapshots |
+| **Claude Opus 4.7 fast mode** | `speed: "fast"` parameter on `claude-opus-4-7` deprecated | **Jul 24, 2026** (removal) | Remove `speed: "fast"` from any claude-opus-4-7 calls |
+| **Wikimedia Core API (`api.wikimedia.org`)** | Gradual deprecation begins Jul 2026; new replacement URLs being created | **Jul 2026 – Jun 2027** | If scraping Wikipedia, switch to new endpoint URLs when published |
+| **MCP Roots capability** | Entering formal deprecation (12+ months to removal) | **Jul 28, 2026** (deprecation) | Replace with tool parameters or server config |
+| **MCP Sampling capability** | Entering formal deprecation (12+ months to removal) | **Jul 28, 2026** (deprecation) | Call your LLM provider API directly instead |
 
 ---
 
@@ -140,6 +184,31 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **X/Twitter API — URL posts** | Now cost $0.20/post (was $0.010) | Apr 20, 2026 | Build text-first X posts; include URLs only where necessary |
 | **Instagram Basic Display API** | Personal accounts locked out permanently | Dec 2024 (enforced 2026) | Business/Creator accounts only via Graph API |
 | **Gemini API key restrictions** | Unrestricted keys rejected; restricted keys required | Jun 19, 2026 (partial) / Sep 2026 (full) | Update key restrictions in Google Cloud Console |
+
+---
+
+## New Free Tools & APIs — Week of 2026-07-10
+
+### Instagram DM Automation — Free Tier Landscape (Clarified)
+
+> ManyChat's free plan was gutted in March 2026 (now 25 contacts, one viral Reel exhausts it in a day). New players have moved in with much more generous free tiers.
+
+| Tool | Free DMs/Month | Key Free Features | Robot Potential |
+|------|---------------|-------------------|-----------------|
+| **ReplyRush** ⭐ | 1,500/month, no card | Comment-to-DM, story reply, keyword triggers | Highest free volume; best for Reel-driven lead capture |
+| **LinkDM** | 1,000/month, no card, no expiry | Comment-to-DM, story reply, keyword automation, core features permanent | Permanent free plan — reliable for sustained robots |
+| **CreatorFlow** | 500/month, no card | Comment-to-DM, story replies, keyword triggers, templates, link tracking | Flat $15 upgrade path for 5,000 DMs/month |
+| **PostEngage.ai** | Unlimited contacts, no card | Full automation suite on free plan — no contact caps | Best free option if volume is high; unusual unlimited free tier |
+
+**Key Change:** ManyChat is no longer viable for free-tier robots. Route new Instagram DM automation builds to ReplyRush or LinkDM.
+
+### AI Rate Limit Improvements (Claude API — Week of 2026-07-10)
+
+| Change | Detail |
+|--------|--------|
+| **Sonnet + Haiku rate limits raised to match Opus** | All three model tiers now share the same rate limits at every usage tier (Start, Build, Scale) |
+| **Usage tiers consolidated** | Three tiers now: Start, Build, Scale. Most organizations moved to higher tier automatically with no action required |
+| **Net effect for robots** | High-volume Claude robots can now use Haiku or Sonnet at the same rate ceiling as Opus — reduces cost for batch operations |
 
 ---
 
