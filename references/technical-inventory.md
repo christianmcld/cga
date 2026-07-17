@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-07-10
+**Last updated:** 2026-07-17
+
+---
+
+## Week of 2026-07-17 — Recon Summary
+
+**Major finds this week:** Meta Muse Spark 1.1 API launched July 9 — Meta's first paid AI model, priced aggressively at $1.25/$4.25 per M tokens, free tier $20 credits + 60 req/min. Supabase shipped an official Remote MCP server (OAuth login flow, no more PAT required, 20+ tools). Linear launched an official hosted MCP server. Gumloop MCP Hub now provides 100+ fully hosted MCP servers (Salesforce, HubSpot, GitHub, Jira, Slack, etc.) on free tier. Discord integration MCP servers confirmed (community-built, multiple implementations). X algorithm major update July 13: Nikita Bier confirmed mutual-follower priority weighting — replies/posts from mutuals now rank above strangers, 2x increase in original posts/replies observed. YouTube formally confirmed viewer satisfaction (surveys + repeats + shares) as primary signal, replacing raw watch time. Instagram expanded carousels to 20 frames, confirmed 3-min Reel recommendation ceiling (can upload up to 20 min but algo stops pushing to non-followers after 3 min).
 
 ---
 
@@ -71,6 +77,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **TikTok Ads** ⭐ NEW | Campaign management, ad groups, creatives, audience targeting, performance analytics | TikTok ad campaign robot, performance monitoring, creative management | `pip install tiktok-ads-mcp` (requires TikTok Business API access) |
 | **Reddit** ⭐ NEW | Read subreddits, posts, comments, search, user profiles, hot/new/top feeds | Community monitoring, trend detection, social listening robot | `npx reddit-mcp-server` (requires Reddit API credentials) |
 | **Ayrshare** ⭐ NEW | 75+ tools across 13 platforms (X, FB, IG, LI, TikTok, YouTube, Pinterest, Reddit, Threads, Bluesky, more) | Multi-platform posting robot, analytics, comment management — one server for all social | `npx -y @ayrshare/mcp-server` (requires Ayrshare API key) |
+| **Discord (Community)** ⭐ NEW | Send/read messages, manage channels, forum operations, reactions, webhook management — multiple community implementations. Read and send messages, manage channels and forums, handle reactions, interact with webhooks directly. | Community management robot, Discord notification bot, server monitoring, channel-based alerts | Multiple options: `github.com/v-3/discordmcp`; `github.com/SaseQ/discord-mcp`; `github.com/IQAIcom/mcp-discord` (requires Discord bot token) |
 
 ### Ecommerce
 | MCP | What It Does | Growth Robot Use | Install |
@@ -80,6 +87,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 ### Project Management
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
+| **Linear** ⭐ NEW (OFFICIAL) | Issues, projects, teams, cycles, milestones, roadmaps, documents — full Linear GraphQL API. Create/update issues, change status, assign, comment. | Project management robot, sprint tracking, issue creation from Claude conversations, release notes | Official remote endpoint (PulseMCP); or `npx add-mcp @tacticlaunch/mcp-linear --env LINEAR_API_TOKEN=YOUR_TOKEN` |
 | **ClickUp** ⭐ NEW (OFFICIAL, PUBLIC BETA) | Task management with assignees/priorities/due dates, time tracking (start/stop timers, log entries), Docs read/write, comment summarization, executive report generation. Available on all plans. Rate limits: 50 calls/24h (Free), 300 calls/24h (Unlimited+); unlimited with Everything AI add-on. | Project management robot, release notes, status reports, task creation from AI conversations, time tracking | In-app: ClickUp Settings → Integrations → MCP; or `claude mcp add clickup` pointing to ClickUp's hosted endpoint |
 | **Atlassian (Jira + Confluence + Bitbucket)** ⭐ NEW | Rovo search across Jira/Confluence, create/update issues and epics, Confluence pages, semantic search | Project management robot, issue tracking, documentation automation | Remote OAuth: `https://mcp.atlassian.com` (GA Feb 4, 2026; free for all Atlassian Cloud customers) |
 
@@ -88,6 +96,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 |-----|-------------|-----------------|---------|
 | **DigitalOcean** | App deployment, hosting, management | Deploy dashboards, landing pages, tools | Native |
 | **Stitch** | UI design system generation | Dashboard and tool UI creation | Native |
+| **Supabase** ⭐ NEW (OFFICIAL REMOTE) | 20+ tools: managed Postgres, schema design, SQL queries, migrations, Edge Functions, Auth, Storage, Realtime DB, branching, log retrieval, docs search. No PAT needed — OAuth login flow built in. | Full backend robot — spin up DB, design tables, query data, deploy functions, manage auth, debug with logs | Remote OAuth (auto-redirects on setup): `npx @supabase/mcp`; or configure in Cursor/Windsurf/Claude Code settings. Launched GA 2026. |
 | **Cloudflare** ⭐ NEW | 2,500+ endpoints — DNS, Workers, R2 storage, Pages, Zero Trust, KV, D1, WAF | Full infrastructure automation, edge function deployment, CDN management | Remote OAuth: `https://mcp.cloudflare.com`; or `npx -y @cloudflare/mcp-server` |
 | **Vercel** ⭐ NEW | Projects, deployment status, env vars, domains, logs, team settings | Deployment robot, env var management, monitoring | `claude mcp add --transport http vercel https://mcp.vercel.com` (OAuth, no local install) |
 | **AWS** ⭐ NEW (OFFICIAL) | Full AWS API — CloudFormation, ECS, S3, Lambda, IAM, CDK, docs, cost management | Cloud infrastructure automation, serverless deployment, cost monitoring | `pip install awslabs.core-mcp-server` (GA May 2026; uvx recommended) |
@@ -97,6 +106,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
 | **n8n** ⭐ NEW | Trigger existing workflows, build/edit workflows (v2.13+), all n8n nodes accessible | AI-triggered automation robot — kick off any n8n workflow from Claude | Built-in to n8n — enable in settings, point MCP client at n8n instance URL |
+| **Gumloop MCP Hub** ⭐ NEW | 100+ fully hosted MCP servers for Salesforce, HubSpot, GitHub, Jira, Slack, Loops, and more. Free plan includes all hosted servers. Pro ($37/mo) adds custom MCP server proxying. No-code AI agent builder + MCP access in one platform. | AI agent orchestration robot, connect agents to 100+ apps without managing server infra; free tier is generous for small-scale growth robots | `gumloop.com/mcp` — OAuth connection, no local install. Free plan: 5K credits/month, 1 active trigger, 5 concurrent agent runs |
 
 ### Web & Research
 | MCP | What It Does | Growth Robot Use | Install |
@@ -184,6 +194,28 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **X/Twitter API — URL posts** | Now cost $0.20/post (was $0.010) | Apr 20, 2026 | Build text-first X posts; include URLs only where necessary |
 | **Instagram Basic Display API** | Personal accounts locked out permanently | Dec 2024 (enforced 2026) | Business/Creator accounts only via Graph API |
 | **Gemini API key restrictions** | Unrestricted keys rejected; restricted keys required | Jun 19, 2026 (partial) / Sep 2026 (full) | Update key restrictions in Google Cloud Console |
+
+---
+
+## New Free Tools & APIs — Week of 2026-07-17
+
+### Meta Muse Spark 1.1 — New AI API with Free Credits
+
+**Launched:** July 9, 2026. Meta's first paid, closed-weights AI model. Multimodal reasoning model built for long, tool-heavy agentic tasks — planning and orchestration across apps and services.
+
+| Detail | Value |
+|--------|-------|
+| **Free tier** | $20 free credits + 60 requests/min, 2M tokens/min |
+| **Input price** | $1.25/M tokens (cached: $0.15/M — extremely cheap for agentic pipelines where system prompts repeat) |
+| **Output price** | $4.25/M tokens |
+| **Context window** | Not disclosed in search |
+| **Availability** | US-based developers only (public preview) |
+| **SDK** | Full SDK + CLI available at launch |
+| **Paid tier** | 3,000 req/min, 4M tokens/min |
+
+**Growth Robot Potential:** High-volume agentic pipelines where tool orchestration matters more than single-step quality. The $0.15/M cached input token price makes it the cheapest option for robots with large, repetitive system prompts. Benchmark against GPT-4.1 and Claude Sonnet before committing — pricing is ~25% of flagship OpenAI/Anthropic rates.
+
+**Install:** `meta-ai` SDK (see `developer.meta.com/ai/resources/blog/build-with-muse-spark/`)
 
 ---
 
