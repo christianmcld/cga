@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-07-17
+**Last updated:** 2026-07-24
+
+---
+
+## Week of 2026-07-24 — Recon Summary
+
+**Major finds this week:** Webflow MCP 2.0 launched July 21 — governance, design-system enforcement, and analytics for AI-driven web management (free on all plans, remote OAuth). GitHub MCP Server updated July 23 to support the new stateless 2026-07-28 spec ahead of release. Sprinklr MCP (Beta, July 15) — first major social listening platform with an official MCP. Previously undocumented MCPs confirmed live: Kit/ConvertKit (official, 13 tools), Monday.com (official, full workspace CRM + PM), Asana V2 (GA, 42 tools — V1 shut down May 11), Pinterest (official, June 17 — live ad analytics), Zoom (expanded May 2026 — 10 enterprise app integrations), Mailchimp (official transactional + community full marketing API), Snowflake (native Cortex Analyst/Search/SQL). Instagram engagement quantification confirmed: DM share ≈ 15 likes, save ≈ 10 likes — DM-share engineering is now the #1 Instagram growth lever. Instagram posts now tracked in Google Search Console (July 7) — IG is officially an SEO channel. LinkedIn Suggested Posts / Topic-Focused Feeds entering wider rollout — quality posts distributed to interested users for months. X replies now weighted 27x over likes (upgraded from 13.5x). DeepSeek `deepseek-chat` and `deepseek-reasoner` aliases retired today at 15:59 UTC — migrate to `deepseek-v4-flash` or `deepseek-v4-pro` immediately. Cloudflare Workers Cache (July 6) — cached automation endpoints cost zero CPU time, free in Workers free tier.
 
 ---
 
@@ -36,6 +42,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Notion** | Pages, databases, comments, search | Project management, CRM, content planning | Native |
 | **Google Analytics (GA4)** ⭐ NEW | GA4 sessions, pageviews, events, conversions, custom reports | Traffic analysis, conversion tracking, funnel analysis | `npx -y google-analytics-mcp` |
 | **Google Search Console** ⭐ NEW | Search queries, CTR, impressions, striking-distance keywords, cannibalization detection | SEO robot — keyword gap analysis, CTR optimization | `npx -y mcp-server-gsc` |
+| **Snowflake** ⭐ NEW (OFFICIAL) | Three native tools: Cortex Analyst (natural-language to SQL over your data), Cortex Search (unstructured/semantic content search), SYSTEM_EXECUTE_SQL (direct SQL with optional read-only flag). RBAC and data masking inherited from your existing Snowflake permissions. Zero infrastructure — runs inside your Snowflake account. | Data warehouse robot — NL queries over business data, semantic search across unstructured docs, automated reporting from Snowflake tables | No install — enable in Snowflake Cortex settings. GA November 4, 2025. |
 | **Ahrefs** ⭐ NEW | Keyword research, backlinks, domain ratings, SERP positions, content gap | SEO analysis, competitor research, link-building automation | `npm install -g @ahrefs/mcp` (official) |
 | **Semrush** ⭐ NEW | Keyword overview, domain analytics, backlink data, position tracking | Competitive SEO research, keyword monitoring | `npx -y github:mrkooblu/semrush-mcp` |
 
@@ -47,12 +54,14 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **HubSpot** ⭐ NEW | Contacts, companies, deals, tickets, notes, lists — read + write | Lead management, deal tracking, contact enrichment, CRM robots | Remote OAuth: `https://mcp.hubspot.com` (GA Q4 2025) |
 | **Salesforce** ⭐ NEW | Accounts, opportunities, leads, contacts, custom objects, SOQL queries | Enterprise CRM automation, pipeline management | Remote: enable in Salesforce Setup; or `npx @salesforce/mcp` (GA April 2026) |
 | **Apollo.io** ⭐ NEW | Prospect search, contact enrichment, company enrichment, sequences, outreach tracking — 45 tools | Lead mining, contact enrichment, outreach sequencing | `npx -y @inferensys/apollo-io-mcp` (free tier available) |
+| **Kit (ConvertKit)** ⭐ NEW (OFFICIAL) | 13 tools — full Kit V4 API: analytics, subscribers, forms, sequences, broadcasts, commerce, tags, segments, bulk operations. Auth handled automatically. Separate Kit Developer Docs MCP for building integrations. | Email subscriber management robot, list segmentation, broadcast automation, revenue tracking from email sales | Remote OAuth: `developers.kit.com/mcp` (all Kit plans) |
 
 ### Email, Outreach & Messaging
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
 | **Postmark (by ActiveCampaign)** ⭐ NEW (OFFICIAL) | 24 tools: single + batch email sending (up to 500/call), template CRUD + validation, message search, delivery diagnostics (diagnoseDelivery tool), bounce management, suppression lists, webhooks, server info. Open source MIT. | Transactional email robot — send AI-drafted emails, diagnose deliverability, manage templates, bulk sends | Clone: `github.com/ActiveCampaign/postmark-mcp` (requires Postmark API key) |
 | **Klaviyo** | Email marketing, campaigns, segments, profiles | Email robots, list management, campaign automation | Native |
+| **Mailchimp** ⭐ NEW | Official: transactional email (Mandrill) — `mandrillapp.com/mcp`. Community full-stack: 112 tools covering campaigns, audiences, reports, segments, automations, e-commerce, with dry-run safety mode. | Email campaign robot, transactional email, audience segmentation, e-commerce email automation | Official: `https://mandrillapp.com/mcp` (API key required); Community full-stack: `github.com/damientilman/mailchimp-mcp-server` |
 | **Beehiiv** ⭐ NEW | Subscriber analytics, publication stats, post management, audience segmentation | Newsletter growth robot, audience analysis, post scheduling | Remote OAuth (enable in Beehiiv settings); or `npx -y beehiiv-mcp-server` (GA March 2026) |
 | **Instantly.ai** ⭐ NEW | Campaigns, leads, accounts, analytics — 31 tools | Cold email robot — create campaigns, add leads, track performance | `pip install instantly-mcp` (requires Instantly API key) |
 | **Twilio** ⭐ NEW | SMS, voice, phone numbers, verify, conversations — 1,800+ endpoints | SMS outreach robots, OTP flows, conversation automation | `npx -y @twilio/mcp-server` or Claude Code `/plugins` → "twilio-developer-kit" (Public Beta 2026) |
@@ -67,6 +76,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Gamma** | AI presentations, documents, webpages | Pitch decks, lead magnets, content | Native |
 | **Hugging Face** | AI models, datasets, papers | Custom AI tools, content generation | Native |
 | **fal.ai** ⭐ NEW | 600+ AI models — image gen (Flux/SDXL), video gen, speech-to-text, music, upscaling | Visual content robots, ad creative generation, video production pipeline | `npx -y fal-ai-mcp` (set `FAL_KEY`; or `claude mcp add fal-ai -e FAL_KEY=your-key -- npx -y fal-ai-mcp`) |
+| **Webflow** ⭐ NEW (OFFICIAL V2) | Design, build, and manage Webflow sites via AI — v2 adds governance layer: branch-based editing, role/permission enforcement (per-site/page/locale/CMS collection), AI attribution in activity log, reusable Agent Instructions for brand/voice/legal constraints, performance analytics (traffic trends, top pages, engagement). Design system (typography, colors, spacing tokens, component variants) exposed as structured data agents can query and obey. | Web publishing robot, CMS content management, landing page creation and iteration, on-brand design automation, site performance analytics | Remote OAuth: `https://mcp.webflow.com/sse` (all Webflow plans, free included); open source: `github.com/webflow/mcp-server` — Launched July 21, 2026 |
 
 ### Social Media
 | MCP | What It Does | Growth Robot Use | Install |
@@ -77,6 +87,8 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **TikTok Ads** ⭐ NEW | Campaign management, ad groups, creatives, audience targeting, performance analytics | TikTok ad campaign robot, performance monitoring, creative management | `pip install tiktok-ads-mcp` (requires TikTok Business API access) |
 | **Reddit** ⭐ NEW | Read subreddits, posts, comments, search, user profiles, hot/new/top feeds | Community monitoring, trend detection, social listening robot | `npx reddit-mcp-server` (requires Reddit API credentials) |
 | **Ayrshare** ⭐ NEW | 75+ tools across 13 platforms (X, FB, IG, LI, TikTok, YouTube, Pinterest, Reddit, Threads, Bluesky, more) | Multi-platform posting robot, analytics, comment management — one server for all social | `npx -y @ayrshare/mcp-server` (requires Ayrshare API key) |
+| **Pinterest** ⭐ NEW (OFFICIAL) | Read-only: live campaign analytics, ad performance data, keyword insights — mirrors what's available in the Pinterest Ads Manager API. Internal at Pinterest: 66,000 invocations/month, 7,000+ hours saved/month. External MCP launched alongside Microsoft Advertising MCP on June 17, 2026. | Pinterest ad analytics robot, keyword research, campaign performance monitoring | Community server: `github.com/collactivelabs/pinterest-mcp-server` (requires Pinterest API credentials) — Launched June 17, 2026 |
+| **Sprinklr** ⭐ NEW (BETA) | Social listening, customer experience (CX) intelligence, brand mentions, competitor monitoring. Part of Summer '26 release which adds video intelligence (ViralMoment), generative AI search tracking (LLM Insights), and creator/performance data (CreatorIQ). Compatible with Claude, Microsoft Copilot, and ChatGPT. | Social listening robot, brand monitoring, competitor tracking, CX analytics | Beta — contact Sprinklr. Launched July 15, 2026 |
 | **Discord (Community)** ⭐ NEW | Send/read messages, manage channels, forum operations, reactions, webhook management — multiple community implementations. Read and send messages, manage channels and forums, handle reactions, interact with webhooks directly. | Community management robot, Discord notification bot, server monitoring, channel-based alerts | Multiple options: `github.com/v-3/discordmcp`; `github.com/SaseQ/discord-mcp`; `github.com/IQAIcom/mcp-discord` (requires Discord bot token) |
 
 ### Ecommerce
@@ -90,6 +102,9 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Linear** ⭐ NEW (OFFICIAL) | Issues, projects, teams, cycles, milestones, roadmaps, documents — full Linear GraphQL API. Create/update issues, change status, assign, comment. | Project management robot, sprint tracking, issue creation from Claude conversations, release notes | Official remote endpoint (PulseMCP); or `npx add-mcp @tacticlaunch/mcp-linear --env LINEAR_API_TOKEN=YOUR_TOKEN` |
 | **ClickUp** ⭐ NEW (OFFICIAL, PUBLIC BETA) | Task management with assignees/priorities/due dates, time tracking (start/stop timers, log entries), Docs read/write, comment summarization, executive report generation. Available on all plans. Rate limits: 50 calls/24h (Free), 300 calls/24h (Unlimited+); unlimited with Everything AI add-on. | Project management robot, release notes, status reports, task creation from AI conversations, time tracking | In-app: ClickUp Settings → Integrations → MCP; or `claude mcp add clickup` pointing to ClickUp's hosted endpoint |
 | **Atlassian (Jira + Confluence + Bitbucket)** ⭐ NEW | Rovo search across Jira/Confluence, create/update issues and epics, Confluence pages, semantic search | Project management robot, issue tracking, documentation automation | Remote OAuth: `https://mcp.atlassian.com` (GA Feb 4, 2026; free for all Atlassian Cloud customers) |
+| **Monday.com** ⭐ NEW (OFFICIAL) | Full workspace access — CRM, project management, operations data. Plug-and-play. All boards, items, sub-items, columns, automations, dashboards. Claude, ChatGPT, and Microsoft Copilot compatible. | Project + CRM robot — manage tasks, boards, deals, contacts from AI; automate status updates and notifications | `npm install @mondaydotcomorg/monday-api-mcp`; Docs: `monday.com/w/mcp` (free on all Monday.com plans) |
+| **Asana** ⭐ NEW (OFFICIAL V2) | 42 tools — task and project management, workload analysis, search, team/workspace management. V2 uses OAuth 2.0 + Streamable HTTP; respects existing Asana access controls. V1 (SSE) shut down May 11, 2026 — must use V2. Two bulk tools added April 13: `create_tasks` and `update_tasks` for dependency and section management. | Project management robot, sprint tracking, task creation from AI conversations, workload analysis, automated status updates | Remote: `https://mcp.asana.com/v2/mcp` (OAuth, all Asana plans) — GA February 4, 2026 |
+| **Zoom** ⭐ NEW (OFFICIAL, EXPANDED) | Meeting summaries, transcripts, recordings, scheduling. May 2026 expansion added agentic search across 10 enterprise platforms: Salesforce accounts, Workday employee/time-off records, ServiceNow tickets/incidents, plus 7 more connected services. Surfaces cross-system context during meetings. | Meeting intelligence robot, meeting summary distribution, cross-platform data retrieval during conversations | Remote OAuth (Zoom Developer Portal); Community: `github.com/echelon-ai-labs/zoom-mcp` — Expanded May 2026 |
 
 ### Infrastructure & Deployment
 | MCP | What It Does | Growth Robot Use | Install |
@@ -158,6 +173,20 @@ These are live connections the CGA can use during sessions to pull data, push co
 
 ---
 
+## Critical API Deprecations & Shutdowns (Week of 2026-07-24)
+
+> **URGENT — Act today or by month-end:**
+
+| API / Service | What Changed | Effective Date | Action Required |
+|---|---|---|---|
+| **DeepSeek `deepseek-chat` + `deepseek-reasoner`** | Legacy model name aliases retired — calls return errors after cutoff | **Jul 24, 2026 at 15:59 UTC** | Migrate to `deepseek-v4-flash` (non-thinking) or `deepseek-v4-pro` (higher-tier). Same base URL, same API key, same request structure. Also: new Anthropic-format endpoint at `https://api.deepseek.com/anthropic` for Claude Code clients |
+| **Zapier — Pipedrive V1 API triggers/actions/searches** | Replaced by V2 versions; V1 deprecated and removed from Zapier | **Jul 31, 2026** | Update any Zapier/Pipedrive Zaps to V2 versions before month end |
+| **OpenAI legacy audio/realtime/transcription snapshots** | Deprecated July 20; full removal from API January 20, 2027 | **Jan 20, 2027** (removal) | Audit any OpenAI audio/realtime/transcription automation; migrate to current model IDs |
+| **Cloudflare Gateway Audit SSH Action** | Network policy action fully removed | **Jul 15, 2026** (done) | Remove from any Cloudflare Zero Trust network policies |
+| **ProductBoard API v1** | Sunset — v2 (launched April 9, 2026) is now the only supported version | **Jul 8, 2026** (done) | Migrate to ProductBoard API v2 |
+
+---
+
 ## Critical API Deprecations & Shutdowns (Week of 2026-07-10)
 
 > New entries this week:
@@ -194,6 +223,62 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **X/Twitter API — URL posts** | Now cost $0.20/post (was $0.010) | Apr 20, 2026 | Build text-first X posts; include URLs only where necessary |
 | **Instagram Basic Display API** | Personal accounts locked out permanently | Dec 2024 (enforced 2026) | Business/Creator accounts only via Graph API |
 | **Gemini API key restrictions** | Unrestricted keys rejected; restricted keys required | Jun 19, 2026 (partial) / Sep 2026 (full) | Update key restrictions in Google Cloud Console |
+
+---
+
+## New Free Tools & APIs — Week of 2026-07-24
+
+### Cloudflare Workers Cache — Zero-CPU Cached Endpoints (July 6, 2026)
+
+A regionally tiered cache for Cloudflare Worker entrypoints. Configured with standard `Cache-Control` headers and one line in `wrangler.toml`. When a cached response exists, the Worker does **not run** and you are **not billed CPU time**.
+
+| Detail | Value |
+|--------|-------|
+| **Free tier** | Included in Workers free tier (100,000 requests/day) |
+| **Configuration** | `cache_rules` in `wrangler.toml` + standard `Cache-Control` headers |
+| **New companion tools** | Wrangler Flagship CLI (feature flags without redeployment); Temporary Accounts API (deploy Workers before user sign-in, for SaaS onboarding) |
+| **Growth robot potential** | HIGH — cache heavy-read automation endpoints to reduce CPU cost to zero |
+| **Source** | `blog.cloudflare.com/workers-cache/` |
+
+---
+
+### Ollama — $65M Series B (July 9, 2026)
+
+Free open-source platform for running LLMs locally — Llama 4, Mistral, Qwen, DeepSeek-R1, CodeLlama, and 200+ others. No API key, no cloud, no rate limits on local inference.
+
+| Detail | Value |
+|--------|-------|
+| **Free tier** | 100% free for local use (unlimited). Cloud execution available for larger models |
+| **Scale** | 8.9 million monthly developers, 67,000 integrations, 85% of Fortune 500 |
+| **Why it matters** | Cheapest inference per token available for any repeatable automation task |
+| **Growth robot potential** | HIGH — zero-cost local inference for content generation, classification, and embedding pipelines |
+| **Install** | `ollama.ai` — one-command install on Mac, Windows, Linux |
+
+---
+
+### Resend Email API — Rebuilt Free Tier Email Tool
+
+Developer-first transactional email API with a fully rebuilt no-code email editor (100% rollout as of July 2026). Best free tier in transactional email for automation.
+
+| Detail | Value |
+|--------|-------|
+| **Free tier** | 3,000 emails/month, 1 domain, 100 emails/day (no credit card) |
+| **What's new** | Rebuilt no-code email editor — new layout, HTML formatter (Prettier), drag-and-drop block reordering. API batch email latency improvements |
+| **Growth robot potential** | HIGH — free transactional email at reasonable volume for small growth robots |
+| **Install** | `resend.com` + API key |
+
+---
+
+### GitHub Copilot CLI in Actions — No PAT Required
+
+GitHub Copilot CLI now runs inside GitHub Actions using the built-in `GITHUB_TOKEN` — no Personal Access Token required.
+
+| Detail | Value |
+|--------|-------|
+| **Free tier** | GitHub Actions free tier (unlimited on public repos; 2,000 min/month on private) |
+| **What this unlocks** | AI-augmented CI/CD pipelines without managing PATs — lower friction for agentic automation inside repos |
+| **Growth robot potential** | HIGH for technical automation pipelines. AI can now comment, create issues, and modify code within Actions at no extra cost |
+| **Source** | `github.blog/changelog/month/07-2026/` |
 
 ---
 
