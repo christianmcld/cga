@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-07-24
+**Last updated:** 2026-07-31
+
+---
+
+## Week of 2026-07-31 — Recon Summary
+
+**Major finds this week:** MCP 2026-07-28 spec officially shipped July 28 — stateless core is live, 400M+ monthly SDK downloads, 10,000+ servers in production; Claude now supports the new spec across all Claude products. Claude Opus 5 launched July 24 at $5/$25 per MTok — near-Fable-5 intelligence at half the price; Sonnet 5 introductory pricing $2/$10 through August 31. YouTube rolled out custom thumbnails for Shorts (July 24 — one of the most-requested creator features ever), AI-powered thumbnail generation in Ask Studio, and introduced an "inauthentic content" monetization ban (July 16) covering generic/template videos and AI persona advice content. MCP Tunnels entered public beta — outbound-only encrypted connections for private-network data access without inbound firewall rules, with Cloudflare/Daytona/Modal/Vercel as sandbox providers. Statewave (Apache-2.0) launched a production-ready MCP server for persistent cross-session agent memory on self-hosted Postgres+pgvector — a major gap in the robot stack now filled for free. OpenAI Assistants API shuts down **August 26, 2026 — 26 days from today**: migrate to Responses API or all `/v1/assistants`, `/v1/threads`, and `/v1/runs` calls return errors. Activepieces confirmed as the best new free automation alternative (10 flows, unlimited runs, open-source). YouTube Shorts clickable Channel Page links launch August 23.
 
 ---
 
@@ -123,6 +129,11 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **n8n** ⭐ NEW | Trigger existing workflows, build/edit workflows (v2.13+), all n8n nodes accessible | AI-triggered automation robot — kick off any n8n workflow from Claude | Built-in to n8n — enable in settings, point MCP client at n8n instance URL |
 | **Gumloop MCP Hub** ⭐ NEW | 100+ fully hosted MCP servers for Salesforce, HubSpot, GitHub, Jira, Slack, Loops, and more. Free plan includes all hosted servers. Pro ($37/mo) adds custom MCP server proxying. No-code AI agent builder + MCP access in one platform. | AI agent orchestration robot, connect agents to 100+ apps without managing server infra; free tier is generous for small-scale growth robots | `gumloop.com/mcp` — OAuth connection, no local install. Free plan: 5K credits/month, 1 active trigger, 5 concurrent agent runs |
 
+### Knowledge & Memory
+| MCP | What It Does | Growth Robot Use | Install |
+|-----|-------------|-----------------|---------|
+| **Statewave** ⭐ NEW (APACHE-2.0) | Open-source memory runtime for AI agents — durable, structured context with provenance across sessions. 5 tools: store memory, retrieve context, compile memory bundles. Reproducible context bundles instead of query-time retrieval. Self-hosted on Postgres + pgvector. Python + TypeScript SDKs. Vendor-neutral (no IDE, model provider, or hosted dependency assumptions). | Persistent agent memory robot — prevents growth robots from "forgetting" between sessions; build long-running automation agents that accumulate knowledge over time; multi-agent workflows with shared context stores | `npm install @statewavedev/mcp-server` (npm); or Docker: `statewavedev/statewave-mcp-server`; GitHub: `github.com/smaramwbc/statewave` — Apache-2.0, self-hosted, July 2026 |
+
 ### Web & Research
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
@@ -140,9 +151,9 @@ These are live connections the CGA can use during sessions to pull data, push co
 
 ---
 
-## MCP Protocol — 2026-07-28 Release Candidate (Spec Changes)
+## MCP Protocol — 2026-07-28 Spec (OFFICIALLY SHIPPED July 28, 2026)
 
-> **Shipping July 28, 2026.** Biggest spec revision since MCP launched. Affects how servers are deployed and what capabilities they can expose.
+> **Live as of July 28, 2026.** Biggest spec revision since MCP launched. The ecosystem has crossed 10,000+ production servers and 400M monthly SDK downloads (4x growth in 2026). Claude now supports the new spec across all products. The RC became the official spec on July 28 after a 10-week validation window. Affects how servers are deployed and what capabilities they can expose.
 
 | Change | What It Means | Action Required |
 |--------|--------------|-----------------|
@@ -170,6 +181,81 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Google AI Studio** | Active | Gemini models, Nano Banana image gen |
 | **Stripe** | Active (Live) | Payment processing, subscription management |
 | **Plaid** | Pending (dev access) | Bank account connections, expense tracking |
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-07-31)
+
+> **URGENT — Act within days:**
+
+| API / Service | What Changed | Effective Date | Action Required |
+|---|---|---|---|
+| **OpenAI Assistants API** | Complete API shutdown — `/v1/assistants`, `/v1/threads`, `/v1/runs` all return errors after deadline. No automated migration tool — manual backfill of Threads → Conversations required. Azure OpenAI has until Feb 2027. | **Aug 26, 2026** (26 days away) | Migrate all OpenAI Assistants bots to the Responses API + Conversations API NOW — not next week. See `developers.openai.com/api/docs/assistants/migration` |
+
+> **Pricing changes (act by August 31):**
+
+| API / Service | What Changed | Effective Date | Action Required |
+|---|---|---|---|
+| **Claude Sonnet 5** | Introductory pricing $2/$10 per MTok (input/output) — will rise after August 31 | **Aug 31, 2026** (pricing window) | Lock in Sonnet 5 for any robots launched before September; budget accordingly |
+
+---
+
+## New Tools & Infrastructure (Week of 2026-07-31)
+
+### Claude Opus 5 — New Flagship API Model (July 24, 2026)
+
+Anthropic's latest Opus-tier model: near-Fable-5 intelligence at half the cost. Surpasses all other non-Fable models on Frontier-Bench v0.1 and CursorBench 3.2.
+
+| Detail | Value |
+|--------|-------|
+| **Release date** | July 24, 2026 |
+| **Context window** | 1M tokens input, 128K output |
+| **Pricing (input/output)** | $5/$25 per MTok standard; $10/$50 fast mode; $2.50/$12.50 batch |
+| **Adaptive thinking** | On by default |
+| **Knowledge cutoff** | May 2026 |
+| **Availability** | Anthropic API, Amazon Bedrock, Google Cloud, Microsoft Foundry |
+| **vs Fable 5** | Within 0.5% on CursorBench at half the cost per task |
+| **Growth robot potential** | HIGH — use Opus 5 for complex agentic robots where Sonnet doesn't cut it but Fable 5 is overkill; batch API at $2.50/$12.50 makes it cost-competitive for bulk operations |
+
+**Current Claude pricing hierarchy (July 2026):** Fable 5 ($10/$50) → Opus 5 ($5/$25) → Sonnet 5 ($3/$15, intro $2/$10 through Aug 31) → Haiku 4.5 ($1/$5)
+
+---
+
+### MCP Tunnels — Private Network Access Without Firewall Rules (Public Beta)
+
+Announced at Code with Claude London (May 19, 2026). MCP Tunnels open an outbound-only encrypted connection from a private network to the MCP host. Agents reach customer/internal data without any inbound firewall rule changes.
+
+| Detail | Value |
+|--------|-------|
+| **Status** | Public beta (self-hosted sandboxes) |
+| **Sandbox providers** | Cloudflare, Daytona, Modal, Vercel |
+| **Use case** | Connect growth robots to private databases, internal CRMs, on-prem tools — without exposing them to the internet |
+| **Growth robot potential** | HIGH for enterprise clients; allows full CRM/database robot access on customer infrastructure |
+| **Source** | `claude.com/blog/bringing-mcp-2026-07-28-to-claude` |
+
+---
+
+### Statewave — Persistent Agent Memory (Apache-2.0, Free)
+
+Open-source memory runtime for AI agents. Prevents robots from forgetting context between sessions. Self-hosted on Postgres + pgvector. Reproducible provenance-tagged context bundles. 5 MCP tools exposed. Launched on Product Hunt July 28, 2026.
+
+See **Knowledge & Memory** table above for full entry.
+
+---
+
+### Activepieces — Best New Free Automation Alternative (July 2026)
+
+Open-source automation platform with the most generous free cloud tier in July 2026.
+
+| Detail | Value |
+|--------|-------|
+| **Free tier** | 10 flows, unlimited runs, no credit card |
+| **Open source** | Yes (self-hostable) |
+| **vs Make** | Make: 1,000 ops/month cap; Activepieces: unlimited runs on free |
+| **vs n8n** | n8n requires self-hosting for unlimited; Activepieces free cloud tier |
+| **Interface** | Clean drag-and-drop, similar to Make |
+| **Growth robot potential** | MEDIUM — best cloud free tier for small automation robots; good fallback when Make quota runs out |
+| **Install** | `activepieces.com` or self-host |
 
 ---
 
