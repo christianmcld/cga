@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-07-31
+**Last updated:** 2026-08-07
+
+---
+
+## Week of 2026-08-07 — Recon Summary
+
+**Major finds this week:** Google Merchant Content API shuts down **August 18 — 11 days from today**: every programmatic ecommerce robot calling the Content API for Shopping starts failing at 00:01 UTC Aug 18. OpenAI Assistants API shuts down **August 26 — 19 days from today** (already logged; treat as active emergency). MCP ecosystem crossed **22,311 servers** (PulseMCP, July 16) with governance transferred to the Linux Foundation's AAIF — signaling enterprise adoption and long-term spec stability. Three new community Substack MCP servers documented: `postcli/substack`, `dkships/substack-publisher-mcp`, and `marcomoauro/substack-mcp` — covering analytics, drafts, posts, and Notes automation. YouTube surfaced two new algorithm signals: non-subscriber reach (60%+ non-subscriber impressions is the healthy benchmark) and a Browse feed personalization overhaul (micro-niche watch history clustering, February 2026). Instagram confirmed Replace Audio feature (July 21) — swap music on published posts/carousels with zero engagement loss. LinkedIn's 60% external-link reach penalty confirmed by Forbes (July 30) — zero-click native content strategy is now mandatory. X engagement velocity now has a confirmed 30-minute amplification window (10+ engagements triggers distribution). YouTube will also stop push notifications for inactive subscribers — channels with stale follower bases lose their notification reach.
 
 ---
 
@@ -129,6 +135,13 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **n8n** ⭐ NEW | Trigger existing workflows, build/edit workflows (v2.13+), all n8n nodes accessible | AI-triggered automation robot — kick off any n8n workflow from Claude | Built-in to n8n — enable in settings, point MCP client at n8n instance URL |
 | **Gumloop MCP Hub** ⭐ NEW | 100+ fully hosted MCP servers for Salesforce, HubSpot, GitHub, Jira, Slack, Loops, and more. Free plan includes all hosted servers. Pro ($37/mo) adds custom MCP server proxying. No-code AI agent builder + MCP access in one platform. | AI agent orchestration robot, connect agents to 100+ apps without managing server infra; free tier is generous for small-scale growth robots | `gumloop.com/mcp` — OAuth connection, no local install. Free plan: 5K credits/month, 1 active trigger, 5 concurrent agent runs |
 
+### Newsletter Publishing
+| MCP | What It Does | Growth Robot Use | Install |
+|-----|-------------|-----------------|---------|
+| **Substack Publisher MCP** ⭐ NEW (COMMUNITY) | Query Substack Publisher API: post analytics, subscriber counts, publication data — read-focused | Newsletter analytics robot — pull subscriber growth, post performance, and revenue data from Claude | `github.com/dkships/substack-publisher-mcp` (requires Substack Publisher API key) |
+| **Substack Automation MCP** ⭐ NEW (COMMUNITY) | Create posts, manage drafts, publish Notes, interact with Substack's API | Newsletter automation robot — draft generation, Notes scheduling, content management | `github.com/marcomoauro/substack-mcp`; or `github.com/conorbronsdon/substack-mcp` (draft-only safety design — cannot publish long-form, only Notes) |
+| **Postcli Substack MCP** ⭐ NEW (COMMUNITY) | Full content management — posts, Notes, comments, profiles, social interactions | Substack social engagement robot, content management, cross-post scheduling | `pulsemcp.com/servers/postcli-substack` (launched March 2026) |
+
 ### Knowledge & Memory
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
@@ -181,6 +194,29 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Google AI Studio** | Active | Gemini models, Nano Banana image gen |
 | **Stripe** | Active (Live) | Payment processing, subscription management |
 | **Plaid** | Pending (dev access) | Bank account connections, expense tracking |
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-08-07)
+
+> **EMERGENCY — Act within days:**
+
+| API / Service | What Changed | Effective Date | Action Required |
+|---|---|---|---|
+| **Google Merchant Content API for Shopping** | Complete shutdown — every programmatic call to the Content API starts failing at 00:01 UTC. Only manual file/CSV uploads via Merchant Center are unaffected. Cascade: product sync stops, new products don't appear in Shopping, edits don't update, inventory sync stops. Silent mispricing trap: the new Merchant API v1 uses different price/sale_price field names — migration without testing causes live products to show wrong prices. | **Aug 18, 2026 (11 days)** | Migrate to Google Merchant API v1 NOW. Migration guide: `brightbid.com/blog/google-merchant-api-migration-2026/`. Test price fields before going live. |
+| **OpenAI Assistants API** | Already logged — complete shutdown of `/v1/assistants`, `/v1/threads`, `/v1/runs` | **Aug 26, 2026 (19 days)** | Migrate to Responses API + Conversations API. Azure users have until Feb 2027. |
+
+---
+
+## MCP Ecosystem Milestone (Week of 2026-08-07)
+
+**22,311 MCP servers** now indexed on PulseMCP as of July 16, 2026. Governance of the MCP specification has been transferred to the **Linux Foundation's AAIF (AI Alliance Infrastructure Foundation)** — the same body that governs ONNX and OpenXLA. Implications:
+- MCP is now formally vendor-neutral infrastructure, not an Anthropic-controlled protocol
+- Enterprise procurement teams can now justify MCP adoption under neutral open-source governance
+- Spec changes will follow Linux Foundation RFC process — slower but more stable than Anthropic's direct ship model
+- All Tier 1 SDKs (TypeScript, Python, Go, C#) speak the 2026-07-28 stateless spec
+
+**Growth robot implication:** Build MCP-native robots with confidence — the spec is now as stable and vendor-neutral as HTTP. No single provider can pull the rug.
 
 ---
 
