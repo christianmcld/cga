@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-08-07
+**Last updated:** 2026-08-14
+
+---
+
+## Week of 2026-08-14 — Recon Summary
+
+**Major finds this week:** Claude Sonnet 5 pricing is now PERMANENTLY frozen at $2/$10 per MTok (Anthropic announced August 11) — the planned September 1 increase to $3/$15 was cancelled. However, Sonnet 5 runs a new tokenizer that produces ~30% more tokens from the same input, which partially offsets the lower per-token price — re-benchmark robot costs. Three critical API deadlines are imminent: **Google Merchant Content API shuts down August 18 (4 days) — emergency still active**; **Anthropic Workbench (legacy) retires August 17 (3 days) — export data NOW or lose all saved prompts/evals**; **OpenAI Assistants API shuts down August 26 (12 days)**. New MCP find: `containers/kubernetes-mcp-server` (v0.0.65, updated August 12) — the most complete K8s/OpenShift MCP available, enables AI-driven cluster management. PulseMCP paused new server submissions through mid-August for platform rework — count stabilized near 22,000+. TikTok Shop shipped five new seller/creator AI tools: AI Dubbing, AI Fashion Video Maker, and List with AI reduce shoppable video production to near-zero effort. X Phoenix algorithm (open-source) received its third major GitHub commit on August 13 — scoring weights unchanged (replies 27x, retweets 20x) but ranking feature set expanded.
 
 ---
 
@@ -128,6 +134,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Vercel** ⭐ NEW | Projects, deployment status, env vars, domains, logs, team settings | Deployment robot, env var management, monitoring | `claude mcp add --transport http vercel https://mcp.vercel.com` (OAuth, no local install) |
 | **AWS** ⭐ NEW (OFFICIAL) | Full AWS API — CloudFormation, ECS, S3, Lambda, IAM, CDK, docs, cost management | Cloud infrastructure automation, serverless deployment, cost monitoring | `pip install awslabs.core-mcp-server` (GA May 2026; uvx recommended) |
 | **Firebase** ⭐ NEW | Firestore, Auth, Storage, Functions, Hosting, Realtime DB — full read/write | Database robots, user management, serverless automation | `npx -y firebase-tools@latest mcp` (built into firebase-tools CLI) |
+| **Kubernetes / OpenShift** ⭐ NEW (Aug 12, 2026) | Full CRUD on K8s resources (pods, deployments, services); log/metric/event queries; Helm ops; OpenShift support. Uses existing kubeconfig. | Cluster management robot, auto-scaling automation, log analysis, cost monitoring for self-hosted growth robot infra | `npx @kubernetes/mcp-server` (set `KUBECONFIG`); `github.com/containers/kubernetes-mcp-server` (Apache-2.0, v0.0.65) |
 
 ### Automation & Workflow
 | MCP | What It Does | Growth Robot Use | Install |
@@ -194,6 +201,41 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Google AI Studio** | Active | Gemini models, Nano Banana image gen |
 | **Stripe** | Active (Live) | Payment processing, subscription management |
 | **Plaid** | Pending (dev access) | Bank account connections, expense tracking |
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-08-14)
+
+> **EMERGENCY — Act within days:**
+
+| API / Service | What Changed | Effective Date | Action Required |
+|---|---|---|---|
+| **Anthropic Workbench (Legacy)** | Legacy Workbench at `platform.claude.com/workbench` permanently shut down — all saved prompts, prompt versions, and evals inside it become inaccessible. Also retiring: `/v1/experimental/generate_prompt`, `/v1/experimental/improve_prompt`, `/v1/experimental/templatize_prompt` (all experimental prompt tool APIs). The new Workbench is a simpler stateless playground; it does not import saved legacy data. | **Aug 17, 2026 (3 DAYS)** | Export all saved prompts and evals from legacy Workbench TODAY. Stop calling the three experimental prompt API endpoints — they error after Aug 17. |
+| **Google Merchant Content API for Shopping** | Already logged last week — still 4 days away and actively failing for anyone who hasn't migrated. Silent pricing trap: Merchant API v1 uses different `price`/`sale_price` field names. | **Aug 18, 2026 (4 DAYS)** | Migrate to Merchant API v1 NOW. Test price fields before flip or live products misprice silently. |
+| **OpenAI Assistants API** | Already logged — 12 days to complete shutdown of `/v1/assistants`, `/v1/threads`, `/v1/runs` | **Aug 26, 2026 (12 days)** | Migrate to Responses API. Azure users have until Feb 2027. No automated thread migration tool — rebuild manually. |
+
+> **Pricing change confirmed permanent (act to lock in):**
+
+| API / Service | What Changed | Effective Date | Action Required |
+|---|---|---|---|
+| **Claude Sonnet 5** | Introductory pricing of $2 input / $10 output per MTok is NOW PERMANENT (Anthropic confirmed Aug 11, 2026). The planned September 1 step-up to $3/$15 was cancelled. **BUT:** Sonnet 5 uses a new tokenizer that produces ~30% more tokens from the same input text vs. prior models — effective cost per request may be higher than pricing alone suggests. | **Permanent as of Aug 11** | Re-run your token benchmarks on Sonnet 5 with real prompts (don't just compare per-MTok price). The $2/$10 rate is locked but the per-request cost depends on how the tokenizer handles your specific content. |
+
+---
+
+## New Tools & Infrastructure (Week of 2026-08-14)
+
+### Kubernetes MCP Server — AI-Driven Cluster Management (Updated August 12, 2026)
+
+Official Red Hat/containers project for managing Kubernetes and OpenShift clusters via MCP. Production-ready, updated August 12, 2026. v0.0.65 is the latest release (July 14).
+
+| Detail | Value |
+|--------|-------|
+| **Source** | `github.com/containers/kubernetes-mcp-server` (Apache-2.0) |
+| **What it connects to** | Any Kubernetes cluster + OpenShift — uses your existing kubeconfig credentials |
+| **What it exposes** | Full CRUD on K8s resources (pods, deployments, services, etc.); query logs, metrics, and events; automate scaling, monitoring, troubleshooting; Helm operations |
+| **Also** | Separate companion: `github.com/openshift/openshift-mcp-server` (OpenShift-specific) |
+| **Install** | `npx @kubernetes/mcp-server` or binary from releases page; configure with `KUBECONFIG` env var |
+| **Growth robot potential** | MEDIUM-HIGH for infrastructure clients — AI-driven cluster management, auto-scaling robots, log analysis, cost optimization; not directly a growth tool but enables self-hosted growth robot infrastructure |
 
 ---
 
