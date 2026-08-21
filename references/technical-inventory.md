@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-08-14
+**Last updated:** 2026-08-21
+
+---
+
+## Week of 2026-08-21 — Recon Summary
+
+**Major finds this week:** No major new MCP servers confirmed this week — PulseMCP's submission queue remains paused through mid-August; ecosystem count holds at 22,000+. Two emergency API deadlines land this week: **Google Merchant Content API shut down August 18 (DONE — now fully dead, no extensions without applying)** and **OpenAI Assistants API shuts down August 26 (5 days away — final warning)**. Platform intelligence finds are rich: LinkedIn's **360Brew** (150B-parameter LLM, built on LLaMA 3) is now confirmed as the active ranking engine — it understands language semantically, not just keyword-counts, making topic-expert content with deep engagement signals the only reliable growth play. YouTube AI creator suite expanded with **Generate Video, Edit with AI, and Extend with AI** in the YouTube Create app — limited rollout now, broader access coming. TikTok's algorithm explicitly boosts videos linked to TikTok Shop (shoppable content gets priority distribution) — major signal for any ecommerce robot. Instagram added **profile clicks** as the 4th distribution signal (joining DM shares, saves, watch time), with likes/follower count at near-zero weight. X launched **Synced Drafts** — start on mobile, finish on web, iOS-first. No new free APIs of note this week.
 
 ---
 
@@ -201,6 +207,33 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Google AI Studio** | Active | Gemini models, Nano Banana image gen |
 | **Stripe** | Active (Live) | Payment processing, subscription management |
 | **Plaid** | Pending (dev access) | Bank account connections, expense tracking |
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-08-21)
+
+> **Status updates — no new deprecations this week, but two prior emergencies hit milestones:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **Google Merchant Content API for Shopping** | Shutdown executed August 18, 2026. Any team still calling the old API gets no response — there is no grace period. However, Google opened an extension form; applicants can request deadline of Oct 15 or Dec 31, 2026 if they cannot finish in time. | **DONE — Shut down Aug 18** | If you missed the deadline, apply immediately for the extension via Google's Merchant Center. Test price fields on Merchant API v1 before going live. |
+| **OpenAI Assistants API** | 5 days until final shutdown of `/v1/assistants`, `/v1/threads`, `/v1/runs` — no extensions have been announced for non-Azure users. Azure users still have until Feb 2027. | **Aug 26, 2026 (5 DAYS)** | Final migration sprint — Responses API or you go dark on Aug 26. |
+
+---
+
+## New Tools & Infrastructure (Week of 2026-08-21)
+
+### YouTube AI Creator Tools — Generate Video, Edit with AI, Extend with AI
+
+YouTube expanded its AI creation suite inside the YouTube Create app. Limited rollout now in ~15 countries including the US, Australia, India, and Brazil. Broader rollout expected through Q4 2026.
+
+| Tool | What It Does | Growth Robot Use |
+|------|-------------|-----------------|
+| **Generate Video** | Uses Gemini Omni to generate vertical video clips up to 10 seconds from a text prompt. Lighting controls available. | Product visual robot — generate short video assets from product descriptions without filming |
+| **Edit with AI** | Turns raw footage into a polished video with music, cuts, and effects — provides a first draft to customize | Speed up video production pipeline; reduce editing time to near-zero for short clips |
+| **Extend with AI** | Adds frames to the start or end of a clip using Adobe Firefly — stretch a reaction shot or hold on a logo without freeze-framing | Pad short clips to ideal algorithm-friendly length without reshoots |
+
+**Growth Robot Potential:** MEDIUM — these are in-app tools, not APIs, so they can't be fully automated from external robots yet. Watch for API exposure in the YouTube Data API. For now, use to accelerate manual content production pipelines.
 
 ---
 
