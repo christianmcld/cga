@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-08-21
+**Last updated:** 2026-08-28
+
+---
+
+## Week of 2026-08-28 — Recon Summary
+
+**Major finds this week:** Claude **Enterprise-Managed Auth** went GA on August 24 — admins on Team/Enterprise plans can now push MCP connectors to their entire org via Okta (zero individual OAuth required); 13 connectors supported at GA including Asana, Atlassian, Canva, Figma, Granola, Linear, Supabase, Datadog, Notion, and Slack. **MCP New Roadmap** published August 22 with five priority areas for the next spec cycle: agentic messaging primitives, HTTP-native transport unification, agent identity/enterprise security (DPoP + Workload Identity Federation), improved result-handling primitives, and better SDK DX. Two new MCP servers confirmed: **Betterworks MCP v0.74.0** (August 11) — first OKR/performance platform with write capabilities, create/update goals and post progress comments with built-in Elicitation API confirmation; **Okta MCP** updated with Elicitation API for destructive operations and Device Assurance Policy tools. Platform intelligence: X open-sourced its **full ranking algorithm** (Apache v2, 10-15x larger codebase including training code) and launched an **"Under the Hood" shadowban checker** — users can download a JSON showing any visibility labels applied to their account. TikTok's algorithm now **tests uploads with followers first** before FYP distribution — a confirmed behavior change for 2026. YouTube rolled out **Ask YouTube** (Gemini-powered natural language video search) on US desktop. Emergency deprecation: **OpenAI Assistants API is now DEAD** (shut down August 26 — any remaining calls hard-fail); **Sora 2 / Videos API** shuts down **September 24, 2026 (27 days away)**.
 
 ---
 
@@ -148,6 +154,16 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **n8n** ⭐ NEW | Trigger existing workflows, build/edit workflows (v2.13+), all n8n nodes accessible | AI-triggered automation robot — kick off any n8n workflow from Claude | Built-in to n8n — enable in settings, point MCP client at n8n instance URL |
 | **Gumloop MCP Hub** ⭐ NEW | 100+ fully hosted MCP servers for Salesforce, HubSpot, GitHub, Jira, Slack, Loops, and more. Free plan includes all hosted servers. Pro ($37/mo) adds custom MCP server proxying. No-code AI agent builder + MCP access in one platform. | AI agent orchestration robot, connect agents to 100+ apps without managing server infra; free tier is generous for small-scale growth robots | `gumloop.com/mcp` — OAuth connection, no local install. Free plan: 5K credits/month, 1 active trigger, 5 concurrent agent runs |
 
+### OKR & HR Performance
+| MCP | What It Does | Growth Robot Use | Install |
+|-----|-------------|-----------------|---------|
+| **Betterworks** ⭐ NEW (Aug 11, 2026) | OKR/goal management with read + write: `goals_create_goal` (create goals, key results, milestones), `goals_update_goal` (update progress, dates, owners, alignment), `goals_create_comment` (post progress updates). First write-capable OKR MCP. Uses MCP Elicitation API — all writes surface the exact values to the user and require explicit confirmation before persisting. | OKR automation robot — create goals from strategy docs, bulk-update progress from data sources, post weekly progress comments automatically; performance review bots that read goal state and draft update narratives | Official — see `betterworks.com/product/mcp`; requires Betterworks account. v0.74.0 released August 11, 2026 |
+
+### Enterprise Identity
+| MCP | What It Does | Growth Robot Use | Install |
+|-----|-------------|-----------------|---------|
+| **Okta** ⭐ NEW (Updated Aug 2026) | Secure AI-to-Okta bridge: natural language → Okta management APIs. Tools for user management, group management, app assignment, Device Assurance Policy configuration. Integrates MCP Elicitation API — destructive operations (delete apps, deactivate users, delete groups/policies) require explicit human confirmation before executing. OAuth scopes enforced. Managed hosted version available (no self-hosting required). | Enterprise identity robot — user provisioning/deprovisioning, device posture checks, group membership management, policy automation; enterprise clients with Okta can connect their growth robot stack to IAM workflows | Open source: `github.com/okta/okta-mcp-server`; Community version: `github.com/fctr-id/okta-mcp-server`; Managed hosted: Okta Developer Portal. Requires Okta admin credentials. |
+
 ### Newsletter Publishing
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
@@ -207,6 +223,50 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Google AI Studio** | Active | Gemini models, Nano Banana image gen |
 | **Stripe** | Active (Live) | Payment processing, subscription management |
 | **Plaid** | Pending (dev access) | Bank account connections, expense tracking |
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-08-28)
+
+> **Status updates + new emergency:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI Assistants API** | Shutdown executed August 26, 2026. Calls to `/v1/assistants`, `/v1/threads`, `/v1/runs` now return hard errors with no grace period. OpenAI did not provide an automated migration tool — existing Threads data must be manually ported to the Conversations API. Azure users still have until Feb 2027. | **DEAD — Shut down Aug 26** | If you have any remaining Assistants-based automation, it is broken NOW. Migrate to Responses API + Conversations API. |
+| **OpenAI Sora 2 / Videos API** ⚠️ NEW EMERGENCY | Deprecated March 24, 2026. Full shutdown approaching. Affected: `sora-2`, `sora-2-pro`, `sora-2-2025-10-06`, `sora-2-2025-12-08`, `sora-2-pro-2025-10-06`, and the Videos API itself. The Sora web/app experience already died April 26. | **Sep 24, 2026 (27 DAYS)** | If you have any automation calling the Videos API or Sora 2 model IDs, migrate to alternative video generation APIs (Runway, Kling, Pika, or fal.ai video models) by September 24 or calls return errors. |
+| **Google Tenor API** | Completing shutdown — rate limits have been throttled progressively since March 2026. Final calls stop working through August/September 2026. | **COMPLETING — Sep 2026** | Use Giphy API as replacement (logged in Week of 2026-07-03). |
+| **claude-opus-4-1-20250805** | Anthropic retired this snapshot model alias on August 5, 2026. | **DONE — Aug 5** | Update any hardcoded model IDs to current aliases. Use `claude-opus-5` for high-intelligence tasks. |
+
+---
+
+## New MCP Platform Feature: Enterprise-Managed Auth (GA — August 24, 2026)
+
+Anthropic made Enterprise-Managed Auth for MCP connectors generally available on August 24, 2026. Available to **Claude Team and Enterprise plan customers only** (not Free or Pro).
+
+**What it does:** Admins provision MCP connector access org-wide through their identity provider (starting with Okta). Users get their tools connected without an individual OAuth trip. Claude presents the authorization server with a signed JWT from the customer's IdP; the server returns an access token in a single back-channel request.
+
+**Connectors at GA (August 24, 2026):**
+- Existing: Asana, Atlassian, Canva, Figma, Granola, Linear, Supabase
+- Newly GA: Datadog, Notion, Slack
+- Coming soon: Exa, Miro, Zoom
+
+**Growth Robot Implication:** Enterprise sales play — if you're building a growth robot for a Team/Enterprise customer, Enterprise-Managed Auth means zero per-user auth friction. The CTO provisions the connector once; every employee gets the robot automatically. Dramatically lowers adoption resistance for internal tooling.
+
+---
+
+## MCP Protocol — New Roadmap (Published August 22, 2026)
+
+> Published by the MCP maintainers. The 2026-07-28 stateless spec is the current stable version. The roadmap describes the next spec cycle.
+
+| Priority | What It Means | Robot Implication |
+|----------|--------------|-------------------|
+| **Agentic Messaging Primitives** | Server-initiated events + maturing the Tasks extension (long-running workflows with lifecycle: start, pause, cancel, resume) | Build growth robots that run for hours/days with proper pause/resume mechanics — batch SEO crawls, multi-day outreach sequences |
+| **HTTP-Native Transport Unification** | Single HTTP transport model covering both local and remote servers; local servers can speak Streamable HTTP over stdio | Simplifies robot deployment — same server code works locally and in cloud without transport changes |
+| **Agent Identity & Enterprise Security** | DPoP (Demonstration of Proof-of-Possession), Workload Identity Federation, token exchange — standardized way to trust non-human (agent) callers | Multi-agent growth robots can authenticate as agents with their own identity, not impersonate a human user — required for enterprise-grade agentic pipelines |
+| **Improved Result-Handling Primitives + Progressive Tool Discovery** | Better typed outputs from tools; servers can expose subset of tools and expand on demand | Robots discover capabilities at runtime — no need to hard-code tool lists; typed results reduce prompt engineering for parsing |
+| **Better SDK Developer Experience** | TypeScript, Python, Go, C# SDK improvements | Lower engineering effort to build and maintain MCP-native growth robots |
+
+**Timeline:** No specific release date. This roadmap covers the spec cycle following 2026-07-28.
 
 ---
 
