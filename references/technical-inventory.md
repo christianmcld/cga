@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-08-28
+**Last updated:** 2026-09-11
+
+---
+
+## Week of 2026-09-11 — Recon Summary
+
+**Major finds this week:** **EMERGENCY — OpenAI Sora 2 / Videos API shuts down in 13 days (September 24, 2026)** — every call to `sora-2`, `sora-2-pro`, and all model snapshots returns `410 Gone` after that date; no successor model announced. **Deadbugz MCP supply chain attack is active** — a live campaign pushed malicious MCP servers into 23 projects via pull requests in a 74-minute window (Aug 10); the payload hides until the 3rd tool call, then hunts SSH keys and cloud credentials; three associated CVEs (path traversal, cleartext cluster token, SSRF) — treat all unvetted community MCP servers as suspect until audited. Two new MCP servers worth logging: **Azure DevOps Remote MCP Server** went GA (August 5) — zero-install, hosted, OAuth, works in Microsoft Foundry and Copilot Studio, gives AI agents direct read/write access to work items, repos, and pipelines; **Microsoft Release Communications (MRC) MCP Server** — free, no-auth remote server exposing the full M365 roadmap and Azure Updates data in natural language (Cloudflare's MCP v2 architecture). New free API: **Gemini 3.8 Flash** (September 2) — $0.75/$3.75 per MTok paid; genuinely free in Google AI Studio with a free-tier API key, no credit card required (Google uses data to improve products). New automation tool: **Keystroke** (YC-backed Sprint Labs, July 13) — code-first AI agent + workflow automation platform; Hobby tier free forever with $1/month included usage credit. API deprecation watch: **Cloudflare rejects account names >65 chars from September 27** (HTTP 400). PulseMCP server submission queue remains paused while platform is reworked; directory count static near 22,000+. MCP security is now a category-1 risk — start vetting every server in the robot stack against the three new CVE patterns.
 
 ---
 
@@ -139,6 +145,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 ### Infrastructure & Deployment
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
+| **Azure DevOps** ⭐ NEW (GA Aug 5, 2026) | Zero-install hosted MCP endpoint — work items, repos, pipelines, test plans, boards. Works in Claude Code, GitHub Copilot, VS Code, Microsoft Foundry, Copilot Studio. OAuth 2.0, inherits existing Azure DevOps permissions. | DevOps robot — create/update issues from AI conversations, query pipeline status, automate work item triage, cross-system reporting | Remote OAuth: `https://mcp.dev.azure.com` — no local install; configure in Claude Code settings or Copilot extensions. GA August 5, 2026. |
 | **DigitalOcean** | App deployment, hosting, management | Deploy dashboards, landing pages, tools | Native |
 | **Stitch** | UI design system generation | Dashboard and tool UI creation | Native |
 | **Supabase** ⭐ NEW (OFFICIAL REMOTE) | 20+ tools: managed Postgres, schema design, SQL queries, migrations, Edge Functions, Auth, Storage, Realtime DB, branching, log retrieval, docs search. No PAT needed — OAuth login flow built in. | Full backend robot — spin up DB, design tables, query data, deploy functions, manage auth, debug with logs | Remote OAuth (auto-redirects on setup): `npx @supabase/mcp`; or configure in Cursor/Windsurf/Claude Code settings. Launched GA 2026. |
@@ -188,6 +195,34 @@ These are live connections the CGA can use during sessions to pull data, push co
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
 | **Google Workspace (Full Suite)** ⭐ NEW | Gmail + Drive + Docs + Sheets + Slides + Calendar + Forms + Tasks + Contacts + Chat | Full G-Suite robot — auto-generate docs, update sheets, manage Drive, all in one server | Community (production-ready): `npx -y google-workspace-mcp`; Official preview: Google Workspace Admin Console (Google Cloud Next 2026) |
+
+### Enterprise & IT Operations
+| MCP | What It Does | Growth Robot Use | Install |
+|-----|-------------|-----------------|---------|
+| **Microsoft Release Communications (MRC)** ⭐ NEW (Sep 2026) | Free, public, no-auth remote MCP server. Exposes the full M365 Roadmap and Azure Updates dataset — filter by product, status, release date, feature name. Natural language queries return structured JSON. Public-only data (not tenant-specific — no Message Center or Service Health). Does not require sign-in or an API key. | IT ops robot — query upcoming M365 feature rollouts, build change-management summaries from Roadmap data, generate weekly "what's changing in Microsoft this month" briefings for enterprise clients | Remote (no auth): endpoint via `learn.microsoft.com/en-us/microsoft-365/admin/manage/mrc-mcp`; works with Claude Code, VS Code, GitHub Copilot. Launched April 2026, expanding September 2026. |
+
+### Security Reference
+> **⚠️ ACTIVE THREAT (September 2026) — Deadbugz MCP Supply Chain Campaign**
+> A live attacker campaign pushed malicious MCP server code into 23 open-source projects via pull requests over a 74-minute window on August 10, 2026. The payload hides until the 3rd tool call, then extracts SSH keys and cloud credentials. **Three associated CVEs:** (1) path traversal allowing arbitrary file reads via any authenticated client; (2) settings tool that returns a cluster token in cleartext; (3) SSRF. **Action items for the robot stack:** (a) audit every community MCP server you use against these three CVE patterns before the next session; (b) pin server versions and review changelogs before upgrading; (c) treat `description` and `name` fields in tool definitions as untrusted input — this campaign exploited metadata poisoning; (d) do not install unreviewed MCP servers from GitHub PRs without checking authorship history.
+
+---
+
+## New APIs & Models — 2026-09-11
+
+### Gemini 3.8 Flash (Google AI Studio)
+- **Launched:** September 2, 2026
+- **Free tier:** Yes — genuinely free in Google AI Studio via a free Gemini API key (no credit card); rate limits apply; Google uses free-tier data to improve products
+- **Paid pricing (through Dec 31, 2026):** $0.75/MTok input, $3.75/MTok output
+- **Context window:** Not disclosed in initial launch docs; assumed 1M+ based on Gemini Flash lineage
+- **Caveat:** 8-hour/day cap on YouTube video ingestion on free tier
+- **Growth robot potential:** Cheapest frontier-tier reasoning available with a genuine free entry path; good for classification/enrichment pipelines where cost-per-token matters; test against Claude Haiku 4.5 before committing
+
+### Keystroke (YC Sprint Labs)
+- **Launched:** July 13, 2026 (YC-backed)
+- **What it is:** Code-first AI agent + workflow automation platform — like n8n but designed around agentic LLM workflows from day one
+- **Free tier:** Hobby — free forever, includes $1/month of usage credit
+- **Paid tiers:** Pro $20/month ($20 usage credit included); Organization — custom, SSO, RBAC, audit logs
+- **Growth robot potential:** Lower infrastructure overhead than self-hosted n8n for AI-native workflows; Hobby tier covers low-volume robots for free
 
 ---
 
