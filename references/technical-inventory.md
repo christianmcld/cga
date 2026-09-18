@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-09-11
+**Last updated:** 2026-09-18
+
+---
+
+## Week of 2026-09-18 — Recon Summary
+
+**Major finds this week:** **⚠️ EMERGENCY — OpenAI Sora 2 / Videos API shuts down in 6 days (September 24, 2026)** — final warning before all `sora-2`, `sora-2-pro`, and snapshot aliases return hard errors; no OpenAI successor model exists. Recommended replacements: Google Veo 3.1 (closest parity), Kling 3.0 (cheapest), Runway Gen-4.5 (editing-led workflows). **Cloudflare legacy Registrar endpoints EOL September 27** — replace with the new Registrar API before next weekend. **New MCP find: Higgsfield API** (launched September 16) — a self-serve pay-per-use aggregator for 50+ image and video generation models (Seedance, Kling, Wan, MiniMax, LTX, PixVerse, Grok video, Recraft, Ideogram, Qwen, Higgsfield Soul 2/Cinema) via a single endpoint; also ships a native MCP connector for Claude Code sessions. $50K prize open for practical builds submitted within 7 days of launch. **New free infrastructure tool: GoModel** — MIT-licensed self-hosted AI gateway in Go (14 MB single binary, 43 MB RAM), one OpenAI- and Anthropic-compatible endpoint for 31 providers (OpenAI, Anthropic, Gemini, Groq, xAI, DeepSeek, Meta, Ollama, Bedrock, and more); ships budgets, caching, guardrails, load balancing, failover, audit logs, and admin dashboard all on the free/self-hosted tier — the most complete LiteLLM/OpenRouter alternative available. **New REST-to-MCP tooling category:** RapidMCP and API-to-MCP Converter now let you convert any OpenAPI/Swagger spec into a live MCP server in minutes with no code — critical for wrapping existing internal APIs for agent access. TikTok launched four major interactive comment features on September 3: voice comments (up to 60 seconds), creator-side comment polls (up to 5 options), photo carousel comments (up to 9 images), and Live Photo comments — these create new behavioral engagement signals that directly affect algorithmic distribution. PulseMCP ecosystem count holds near 22,000+; new submissions queue still paused.
 
 ---
 
@@ -112,6 +118,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Gamma** | AI presentations, documents, webpages | Pitch decks, lead magnets, content | Native |
 | **Hugging Face** | AI models, datasets, papers | Custom AI tools, content generation | Native |
 | **fal.ai** ⭐ NEW | 600+ AI models — image gen (Flux/SDXL), video gen, speech-to-text, music, upscaling | Visual content robots, ad creative generation, video production pipeline | `npx -y fal-ai-mcp` (set `FAL_KEY`; or `claude mcp add fal-ai -e FAL_KEY=your-key -- npx -y fal-ai-mcp`) |
+| **Higgsfield API** ⭐ NEW (Sep 16, 2026) | 50+ frontier image and video generation models via single pay-per-use endpoint. Video models: Seedance, Kling 3.0, Wan, MiniMax, LTX, PixVerse, Grok Video, Higgsfield DoP. Image models: Recraft, Ideogram, Qwen, Higgsfield Soul 2/Soul Cinema. No subscription — top up balance, pay per generation at published rates. Also ships native MCP connector for Claude sessions. Company at $5.4B valuation. | Multi-model video/image robot — swap between 50+ generators per use case without managing multiple API keys; Sora 2 replacement workflow; creative content production pipeline | MCP connector: `higgsfield.ai/higgsfield-api` (select "Claude" integration); Direct API: `higgsfield.ai` — `Authorization: Bearer <API_KEY>` on each model endpoint. Launched September 16, 2026. |
 | **Webflow** ⭐ NEW (OFFICIAL V2) | Design, build, and manage Webflow sites via AI — v2 adds governance layer: branch-based editing, role/permission enforcement (per-site/page/locale/CMS collection), AI attribution in activity log, reusable Agent Instructions for brand/voice/legal constraints, performance analytics (traffic trends, top pages, engagement). Design system (typography, colors, spacing tokens, component variants) exposed as structured data agents can query and obey. | Web publishing robot, CMS content management, landing page creation and iteration, on-brand design automation, site performance analytics | Remote OAuth: `https://mcp.webflow.com/sse` (all Webflow plans, free included); open source: `github.com/webflow/mcp-server` — Launched July 21, 2026 |
 
 ### Social Media
@@ -160,6 +167,12 @@ These are live connections the CGA can use during sessions to pull data, push co
 |-----|-------------|-----------------|---------|
 | **n8n** ⭐ NEW | Trigger existing workflows, build/edit workflows (v2.13+), all n8n nodes accessible | AI-triggered automation robot — kick off any n8n workflow from Claude | Built-in to n8n — enable in settings, point MCP client at n8n instance URL |
 | **Gumloop MCP Hub** ⭐ NEW | 100+ fully hosted MCP servers for Salesforce, HubSpot, GitHub, Jira, Slack, Loops, and more. Free plan includes all hosted servers. Pro ($37/mo) adds custom MCP server proxying. No-code AI agent builder + MCP access in one platform. | AI agent orchestration robot, connect agents to 100+ apps without managing server infra; free tier is generous for small-scale growth robots | `gumloop.com/mcp` — OAuth connection, no local install. Free plan: 5K credits/month, 1 active trigger, 5 concurrent agent runs |
+
+### REST-to-MCP Conversion Tooling
+| Tool | What It Does | Growth Robot Use | Install |
+|------|-------------|-----------------|---------|
+| **RapidMCP** ⭐ NEW (Sep 2026) | Convert any REST API into a working MCP server in minutes — zero code required. Point at an OpenAPI/Swagger spec or paste API docs. Auto-generates tool definitions, handles auth, and serves an MCP endpoint. | Instant MCP wrapper for any internal tool or third-party API that doesn't have a native MCP server — wrap GoHighLevel custom endpoints, internal CRM APIs, data warehouse APIs, etc. | `rapid-mcp.com` — web UI or CLI. No install required for hosted version. |
+| **API-to-MCP Converter** ⭐ NEW (Sep 2026) | Converts any REST API or OpenAPI spec into MCP-compatible tools instantly. Source: AiAgentKarl on Glama. | Same as RapidMCP — wrap any REST API for agent access without building a full MCP server from scratch | `glama.ai/mcp/servers/AiAgentKarl/api-to-mcp-converter` |
 
 ### OKR & HR Performance
 | MCP | What It Does | Growth Robot Use | Install |
@@ -223,6 +236,40 @@ These are live connections the CGA can use during sessions to pull data, push co
 - **Free tier:** Hobby — free forever, includes $1/month of usage credit
 - **Paid tiers:** Pro $20/month ($20 usage credit included); Organization — custom, SSO, RBAC, audit logs
 - **Growth robot potential:** Lower infrastructure overhead than self-hosted n8n for AI-native workflows; Hobby tier covers low-volume robots for free
+
+---
+
+## New APIs & Models — 2026-09-18
+
+### Higgsfield API — 50+ Video & Image Models, Single Pay-Per-Use Endpoint
+- **Launched:** September 16, 2026
+- **What it is:** Self-serve API aggregating 50+ frontier image and video generation models — Seedance, Kling 3.0, Wan, MiniMax, LTX, PixVerse, Grok Video, Recraft, Ideogram, Higgsfield Soul 2/Cinema, and more
+- **Free tier:** No free tier — pay-per-generation. Top up a balance, spending stops at zero. No subscription required.
+- **MCP:** Native MCP connector available from higgsfield.ai (Claude Code integration)
+- **Sora replacement angle:** With OpenAI's Sora 2 shutting down September 24, Higgsfield's Kling 3.0 and Wan video models are drop-in replacements via a single endpoint switch
+- **Growth robot potential:** HIGH — multi-model video/image production robot; swap models per use case without managing multiple API keys; $50K prize open for practical builds within 7 days of launch
+
+### GoModel — Self-Hosted AI Gateway (MIT, Free)
+- **What it is:** Open-source AI gateway written in Go — a self-hosted LiteLLM/OpenRouter alternative
+- **Free tier:** 100% free (MIT, self-hosted). Everything included: audit logs, budgets, rate limits, admin dashboard, load balancing, failover
+- **Binary size:** 14 MB, runs in ~43 MB RAM — runs on any tiny VPS
+- **Providers covered:** 31 providers — OpenAI, Anthropic, Gemini, Vertex AI, Groq, xAI (Grok), DeepSeek, Meta Muse Spark, OpenRouter, Amazon Bedrock, Ollama, vLLM, Azure OpenAI, and more
+- **API compatibility:** OpenAI-compatible AND Anthropic-compatible endpoint in one binary
+- **Key features:** Budgets per team/project, guardrails, intelligent routing, sticky sessions, failover, real-time logs, caching, observability
+- **Growth robot potential:** HIGH for infrastructure — route all robot LLM traffic through one internal endpoint; enforce cost budgets automatically; failover between providers transparently
+- **Source:** `github.com/mikemikimike/GoModel` or `github.com/octo-patch/GoModel` (MIT)
+- **vs OpenRouter:** GoModel is self-hosted (GDPR-friendly, no 5.5% platform fee, no external data sharing); OpenRouter is hosted with 500+ models
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-09-18)
+
+> **⚠️ EMERGENCY — Final Warning (6 days):**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI Sora 2 / Videos API** | **FINAL WARNING** — shutdown executes September 24, 2026 at 00:00 UTC. All calls to `sora-2`, `sora-2-pro`, `sora-2-2025-10-06`, `sora-2-2025-12-08`, `sora-2-pro-2025-10-06`, and the Videos API itself return hard errors after this date. OpenAI has NOT announced a replacement video model. | **Sep 24, 2026 — 6 DAYS** | Migrate immediately. Recommended replacements: **Google Veo 3.1** (closest parity), **Kling 3.0 via Higgsfield API** (cheapest), **Runway Gen-4.5** (editing-led workflows). Export any Sora-generated content — OpenAI will permanently delete all Sora data after the final export window. |
+| **Cloudflare Legacy Registrar API** | Legacy domain management endpoints (`/registrar/...` old routes) EOL September 27, 2026. Replaced by new Registrar API with domain search, availability checking, and registration capabilities. | **Sep 27, 2026 — 9 DAYS** | Update any Cloudflare Registrar automation to new API endpoints. See `developers.cloudflare.com/fundamentals/api/reference/deprecations/` |
 
 ---
 
