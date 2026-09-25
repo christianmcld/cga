@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-09-18
+**Last updated:** 2026-09-25
+
+---
+
+## Week of 2026-09-25 — Recon Summary
+
+**Major finds this week:** **⚠️ CONFIRMED DEAD — OpenAI Sora 2 / Videos API shutdown executed September 24, 2026** — all `sora-2`, `sora-2-pro`, and snapshot aliases now return hard errors; no OpenAI successor model. Confirmed replacements in order: **Google Veo 3.1** (best parity; $0.05–$0.40/sec by tier; available via Gemini API, Vertex AI, fal.ai, Replicate), **Wan 3.0**, **MiniMax H3**, **Kling v3 Pro**. **New MCP: Databricks Genie One MCP** reached GA on September 22, 2026 — give any AI agent natural-language access to your enterprise data warehouse with full Unity Catalog governance; old beta endpoint sunsets October 31, 2026. **AWS HealthOmics MCP updated** (September 22) — vended metrics tools and metrics-backed run performance analysis added. **Instagram confirmed hard repost ban**: accounts posting 10+ reposts in a 30-day window are fully excluded from Reels/Feed recommendations — cross-platform reposter robots need a native-content layer or they'll be blacklisted. **GitLab.com rate limits tightening October 19**: Free users and unauthenticated requests hit new limits first; preview windows October 7 + 14. **Cloudflare DNS Settings API** changing representation of Advanced Nameservers starting October 26. OpenAI deprecated `gpt-5.4-cyber` — removed October 1, 2026.
 
 ---
 
@@ -78,6 +84,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 ### Data & Analytics
 | MCP | What It Does | Growth Robot Use | Install |
 |-----|-------------|-----------------|---------|
+| **Databricks Genie One MCP** ⭐ NEW (GA Sep 22, 2026) | Natural-language → SQL + semantic search over your enterprise data warehouse. Grounded in Genie Ontology; Unity Catalog permissions enforced on every query. Lives in Unity Gateway as a managed MCP Service (`system.ai.genie_one_mcp`). Deep links back to cited Databricks sources in responses. Old beta endpoint sunsets October 31, 2026. | Enterprise data intelligence robot — ask NL questions against your Databricks warehouse and get governed answers; powers business analytics robots for clients on the Databricks stack | No install — enable the `system.ai.genie_one_mcp` MCP Service in Unity Gateway (Databricks Admin Console). GA September 22, 2026. |
 | **Stripe** | Payment data, subscriptions, customers, invoices, revenue | Revenue tracking, churn detection, LTV calculation, abandoned cart data | Native |
 | **Google Calendar** | Events, scheduling, free time | Book meetings, event-based robots | Native |
 | **Gmail** | Read/search emails, create drafts | Email monitoring, outreach automation | Native |
@@ -259,6 +266,41 @@ These are live connections the CGA can use during sessions to pull data, push co
 - **Growth robot potential:** HIGH for infrastructure — route all robot LLM traffic through one internal endpoint; enforce cost budgets automatically; failover between providers transparently
 - **Source:** `github.com/mikemikimike/GoModel` or `github.com/octo-patch/GoModel` (MIT)
 - **vs OpenRouter:** GoModel is self-hosted (GDPR-friendly, no 5.5% platform fee, no external data sharing); OpenRouter is hosted with 500+ models
+
+---
+
+## New APIs & Models — 2026-09-25
+
+### Google Veo 3.1 — Confirmed Primary Sora 2 Replacement (Now Active)
+
+With Sora 2 dead as of September 24, 2026, Veo 3.1 is the confirmed best-in-class video API replacement. Available since November 2025; Lite / Fast / Standard / 4K tiers added in early 2026.
+
+| Tier | Resolution | Price per Second | Notes |
+|------|------------|-----------------|-------|
+| **Veo 3.1 Lite** | 720p | $0.05/sec | Budget option — fastest generation |
+| **Veo 3.1 Fast** | 720p | $0.10/sec | Balanced speed/quality |
+| **Veo 3.1 Standard** | 1080p | $0.40/sec | Production quality — closest Sora parity |
+| **Veo 3.1 Standard 4K** | 4K (no audio) | $0.20/sec | High-res without audio track |
+| **Veo 3.1 w/ Audio** | 1080p | $0.40/sec | Native synchronized audio generation |
+| **Veo 3.1 w/ Audio 4K** | 4K | $0.60/sec | Premium |
+
+- **Access routes:** Gemini API, Vertex AI, fal.ai, Replicate, Google AI Pro/Ultra, OpenRouter
+- **Other Sora 2 alternatives:** Wan 3.0, MiniMax H3, Kling v3 Pro (all available via Higgsfield API)
+- **Growth robot potential:** HIGH — Veo 3.1 Lite at $0.05/sec makes short-clip video production dirt cheap; Standard 1080p with audio is the drop-in for any Sora 2 workflow
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-09-25)
+
+> **Status updates:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI Sora 2 / Videos API** | **SHUTDOWN EXECUTED** September 24, 2026. All calls to `sora-2`, `sora-2-pro`, `sora-2-2025-10-06`, `sora-2-2025-12-08`, `sora-2-pro-2025-10-06` now return hard errors. No OpenAI replacement exists. | **DEAD — Sep 24** | Migrate to **Google Veo 3.1** (Gemini API / Vertex AI / fal.ai), **Wan 3.0**, **MiniMax H3**, or **Kling v3 Pro**. OpenAI will permanently delete all Sora data — export window is closing. |
+| **Cloudflare Legacy Registrar API** | Old `/registrar/...` endpoints EOL September 27, 2026. | **Sep 27, 2026 — 2 DAYS** | Update to new Registrar API now. |
+| **OpenAI `gpt-5.4-cyber`** | Deprecated; removed from API October 1, 2026. | **Oct 1, 2026 — 6 DAYS** | Update any hardcoded model IDs calling `gpt-5.4-cyber`. |
+| **GitLab.com Rate Limits** | New subscription-tier-based rate limits start October 19 for Free users and unauthenticated requests (60 req/hr per IP unauthenticated). Preview windows: October 7 + 14 (15:00–19:00 UTC). Premium + Ultimate follow in January 2027. | **Oct 19, 2026** | Audit any GitLab automation calling the API as Free or unauthenticated. Move to authenticated requests now. |
+| **Cloudflare DNS Settings API** | Starting October 26, 2026, Advanced Nameservers will be represented with `nameservers.type: "cloudflare.advanced"` — any code parsing DNS settings API responses for nameserver data must handle the new field format. | **Oct 26, 2026** | Update any Cloudflare DNS automation parsing nameserver types. |
 
 ---
 
