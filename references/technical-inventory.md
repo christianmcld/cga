@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-09-25
+**Last updated:** 2026-10-02
+
+---
+
+## Week of 2026-10-02 — Recon Summary
+
+**Major finds this week:** **⚠️ EMERGENCY — Cloudflare Zero Trust Networks + Tunnel API breaking changes go live October 5 (3 days)**: CIDR-encoded route endpoints (`/routes/CIDR`) deprecated — migrate to route_id-based endpoints immediately; separately, the `connections` array is removed from tunnel list/get responses — query the dedicated `/connections` endpoint instead; both affect Terraform scripts, cloudflared configs, and direct API code. **⚠️ CRITICAL — Stripe MCP auth deadline October 31, 2026**: full-access secret keys and non-Agent-tagged restricted keys will stop working with the Stripe MCP at `mcp.stripe.com` — must migrate to Agent Key (a restricted key tagged `agent`) or OAuth before this date. **New model: OpenAI GPT-6.1 Sol** entered public beta — 8× faster token generation than Codex, 6× faster in the API, priced at one-fifth of GPT-6 Astra, with computer use available via the Agents API (also now in public beta) adding multi-agent support, tool search, context compaction, and GUI automation. **Deprecation deadlines now active:** GitHub Copilot legacy models (Gemini 3.7 Flash, GPT-5.5, GPT-5.4, Grok 4.5) deprecated October 19; OpenAI legacy snapshot models `gpt-3.5-turbo-0125` and `gpt-4-0613` shut down October 23; OpenAI TTS models deprecated January 6, 2027 (no direct OpenAI replacement — plan third-party TTS migration). **No major new MCP servers this week** — ecosystem in consolidation mode; PulseMCP count stable at 22,311+. **Previously undocumented January 26 MCP batch now confirmed:** Amplitude, Box, Clay, and Hex all launched official remote MCP servers on January 26, 2026 (the largest single-day MCP launch event of 2026). **RunwayML official MCP** now confirmed and documented — frontier video/image generation models including Gen-4.5 with tight Claude integration.
 
 ---
 
@@ -93,6 +99,8 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Google Search Console** ⭐ NEW | Search queries, CTR, impressions, striking-distance keywords, cannibalization detection | SEO robot — keyword gap analysis, CTR optimization | `npx -y mcp-server-gsc` |
 | **Snowflake** ⭐ NEW (OFFICIAL) | Three native tools: Cortex Analyst (natural-language to SQL over your data), Cortex Search (unstructured/semantic content search), SYSTEM_EXECUTE_SQL (direct SQL with optional read-only flag). RBAC and data masking inherited from your existing Snowflake permissions. Zero infrastructure — runs inside your Snowflake account. | Data warehouse robot — NL queries over business data, semantic search across unstructured docs, automated reporting from Snowflake tables | No install — enable in Snowflake Cortex settings. GA November 4, 2025. |
 | **Ahrefs** ⭐ NEW | Keyword research, backlinks, domain ratings, SERP positions, content gap | SEO analysis, competitor research, link-building automation | `npm install -g @ahrefs/mcp` (official) |
+| **Amplitude** ⭐ NEW (Jan 26, 2026) | Analytics event data — query events, user behavior funnels, charts, cohorts, experiment results. Official remote MCP. Launched January 26 as part of the largest single-day MCP expansion of 2026. Ships MCP Apps dashboard UI. | Analytics intelligence robot — pull conversion funnel data, cohort analysis, A/B experiment results directly into Claude sessions | Remote OAuth: Amplitude platform settings. GA January 26, 2026. |
+| **Hex** ⭐ NEW (Jan 26, 2026) | Data analytics notebooks with MCP Apps interactive dashboard UI — query datasets, generate charts, run notebook cells, share analyses. Official remote MCP. | Data analysis robot — run data queries and generate interactive dashboards without leaving Claude | Remote OAuth: Hex platform settings. GA January 26, 2026. |
 | **Semrush** ⭐ NEW | Keyword overview, domain analytics, backlink data, position tracking | Competitive SEO research, keyword monitoring | `npx -y github:mrkooblu/semrush-mcp` |
 
 ### CRM & Sales Intelligence
@@ -103,6 +111,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **HubSpot** ⭐ NEW | Contacts, companies, deals, tickets, notes, lists — read + write | Lead management, deal tracking, contact enrichment, CRM robots | Remote OAuth: `https://mcp.hubspot.com` (GA Q4 2025) |
 | **Salesforce** ⭐ NEW | Accounts, opportunities, leads, contacts, custom objects, SOQL queries | Enterprise CRM automation, pipeline management | Remote: enable in Salesforce Setup; or `npx @salesforce/mcp` (GA April 2026) |
 | **Apollo.io** ⭐ NEW | Prospect search, contact enrichment, company enrichment, sequences, outreach tracking — 45 tools | Lead mining, contact enrichment, outreach sequencing | `npx -y @inferensys/apollo-io-mcp` (free tier available) |
+| **Clay** ⭐ NEW (Jan 26, 2026) | Data enrichment, contact research, GTM workflow automation with MCP Apps interactive dashboard UI. Ships as official remote MCP. Read + write on Clay tables and enrichment waterfalls. | Contact enrichment robot with live UI feedback; GTM automation workflows that combine data lookups, enrichment, and outreach sequencing in one Claude session | Remote OAuth: Clay platform settings. GA January 26, 2026. |
 | **Kit (ConvertKit)** ⭐ NEW (OFFICIAL) | 13 tools — full Kit V4 API: analytics, subscribers, forms, sequences, broadcasts, commerce, tags, segments, bulk operations. Auth handled automatically. Separate Kit Developer Docs MCP for building integrations. | Email subscriber management robot, list segmentation, broadcast automation, revenue tracking from email sales | Remote OAuth: `developers.kit.com/mcp` (all Kit plans) |
 
 ### Email, Outreach & Messaging
@@ -125,6 +134,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Gamma** | AI presentations, documents, webpages | Pitch decks, lead magnets, content | Native |
 | **Hugging Face** | AI models, datasets, papers | Custom AI tools, content generation | Native |
 | **fal.ai** ⭐ NEW | 600+ AI models — image gen (Flux/SDXL), video gen, speech-to-text, music, upscaling | Visual content robots, ad creative generation, video production pipeline | `npx -y fal-ai-mcp` (set `FAL_KEY`; or `claude mcp add fal-ai -e FAL_KEY=your-key -- npx -y fal-ai-mcp`) |
+| **RunwayML** ⭐ NEW (OFFICIAL) | Gen-4.5 and newer frontier video/image generation models — text-to-video, image-to-video, video extension, inpainting, motion brush. Official MCP with tight Claude integration. Full generation pipeline. | Video generation robot — editing-led workflows; primary Sora 2 replacement for editing-style use cases; creative content production pipeline | Remote OAuth: RunwayML Developer Portal (`runwayml.com/api`); direct API: `api.runwayml.com` |
 | **Higgsfield API** ⭐ NEW (Sep 16, 2026) | 50+ frontier image and video generation models via single pay-per-use endpoint. Video models: Seedance, Kling 3.0, Wan, MiniMax, LTX, PixVerse, Grok Video, Higgsfield DoP. Image models: Recraft, Ideogram, Qwen, Higgsfield Soul 2/Soul Cinema. No subscription — top up balance, pay per generation at published rates. Also ships native MCP connector for Claude sessions. Company at $5.4B valuation. | Multi-model video/image robot — swap between 50+ generators per use case without managing multiple API keys; Sora 2 replacement workflow; creative content production pipeline | MCP connector: `higgsfield.ai/higgsfield-api` (select "Claude" integration); Direct API: `higgsfield.ai` — `Authorization: Bearer <API_KEY>` on each model endpoint. Launched September 16, 2026. |
 | **Webflow** ⭐ NEW (OFFICIAL V2) | Design, build, and manage Webflow sites via AI — v2 adds governance layer: branch-based editing, role/permission enforcement (per-site/page/locale/CMS collection), AI attribution in activity log, reusable Agent Instructions for brand/voice/legal constraints, performance analytics (traffic trends, top pages, engagement). Design system (typography, colors, spacing tokens, component variants) exposed as structured data agents can query and obey. | Web publishing robot, CMS content management, landing page creation and iteration, on-brand design automation, site performance analytics | Remote OAuth: `https://mcp.webflow.com/sse` (all Webflow plans, free included); open source: `github.com/webflow/mcp-server` — Launched July 21, 2026 |
 
@@ -166,6 +176,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Cloudflare** ⭐ NEW | 2,500+ endpoints — DNS, Workers, R2 storage, Pages, Zero Trust, KV, D1, WAF | Full infrastructure automation, edge function deployment, CDN management | Remote OAuth: `https://mcp.cloudflare.com`; or `npx -y @cloudflare/mcp-server` |
 | **Vercel** ⭐ NEW | Projects, deployment status, env vars, domains, logs, team settings | Deployment robot, env var management, monitoring | `claude mcp add --transport http vercel https://mcp.vercel.com` (OAuth, no local install) |
 | **AWS** ⭐ NEW (OFFICIAL) | Full AWS API — CloudFormation, ECS, S3, Lambda, IAM, CDK, docs, cost management | Cloud infrastructure automation, serverless deployment, cost monitoring | `pip install awslabs.core-mcp-server` (GA May 2026; uvx recommended) |
+| **Box** ⭐ NEW (Jan 26, 2026) | Enterprise content management — files, folders, search, metadata, permissions, workflows, collaboration. Official remote MCP. | Enterprise document management robot — search and retrieve content, automate file operations, manage permissions at scale for enterprise clients | Remote OAuth: Box Developer Console. GA January 26, 2026. |
 | **Firebase** ⭐ NEW | Firestore, Auth, Storage, Functions, Hosting, Realtime DB — full read/write | Database robots, user management, serverless automation | `npx -y firebase-tools@latest mcp` (built into firebase-tools CLI) |
 | **Kubernetes / OpenShift** ⭐ NEW (Aug 12, 2026) | Full CRUD on K8s resources (pods, deployments, services); log/metric/event queries; Helm ops; OpenShift support. Uses existing kubeconfig. | Cluster management robot, auto-scaling automation, log analysis, cost monitoring for self-hosted growth robot infra | `npx @kubernetes/mcp-server` (set `KUBECONFIG`); `github.com/containers/kubernetes-mcp-server` (Apache-2.0, v0.0.65) |
 
@@ -287,6 +298,50 @@ With Sora 2 dead as of September 24, 2026, Veo 3.1 is the confirmed best-in-clas
 - **Access routes:** Gemini API, Vertex AI, fal.ai, Replicate, Google AI Pro/Ultra, OpenRouter
 - **Other Sora 2 alternatives:** Wan 3.0, MiniMax H3, Kling v3 Pro (all available via Higgsfield API)
 - **Growth robot potential:** HIGH — Veo 3.1 Lite at $0.05/sec makes short-clip video production dirt cheap; Standard 1080p with audio is the drop-in for any Sora 2 workflow
+
+---
+
+## New APIs & Models — 2026-10-02
+
+### OpenAI GPT-6.1 Sol — New Flagship (Public Beta, October 2026)
+
+OpenAI's newest model below GPT-6 Astra entered public beta. Significant speed and cost improvements over prior Codex/GPT-6 tiers.
+
+| Detail | Value |
+|--------|-------|
+| **Speed** | 8× faster token generation than Codex; 6× faster in the API |
+| **Price** | One-fifth the cost of GPT-6 Astra |
+| **Status** | Public beta — October 2026 |
+| **Computer use** | Available via the Agents API (now in public beta) |
+| **Agents API** | Multi-agent orchestration, tool search, context compaction, GUI automation — all public beta |
+| **Growth robot potential** | HIGH — fastest and most cost-effective OpenAI model; computer use unlocks GUI automation robots that can operate web UIs without custom integrations |
+
+**Note:** Computer use via the Agents API is a meaningful unlock for growth robots — any web tool without an API can now be automated by pointing a computer-use agent at the browser interface.
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-10-02)
+
+> **⚠️ EMERGENCY — Act within 3 days (by October 5):**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **Cloudflare Zero Trust Networks API** | CIDR-encoded route endpoints (`/routes/CIDR`) deprecated. All route operations must use route_id-based endpoints. Affects Terraform scripts, cloudflared configs, and any direct API calls using CIDR as the route key. | **Oct 5, 2026 — 3 DAYS** | Audit all Cloudflare Zero Trust automation. Migrate API calls and Terraform from CIDR to route_id-based endpoints NOW before calls start failing. |
+| **Cloudflare Tunnel API** | `connections` array removed from tunnel list/get API responses for `cfd_tunnel` and `warp_connector` resource types. Data is now only available by querying the dedicated `/connections` endpoint separately. | **Oct 5, 2026 — 3 DAYS** | Update any code that parses `connections` field from tunnel list/get responses to query `/connections` endpoint separately. |
+
+> **⚠️ CRITICAL — Stripe MCP key migration (by October 31):**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **Stripe MCP — Auth Migration** | Full-access secret keys and non-Agent-tagged restricted keys will stop being accepted by the Stripe MCP (`mcp.stripe.com`) after October 31, 2026. Stripe is enforcing Agent Key (a restricted key with `agent` tag) or OAuth for all MCP connections. | **Oct 31, 2026** | Audit all Stripe MCP connections. Migrate to Agent Key (restricted key tagged `agent`) or OAuth before October 31 or Stripe MCP calls start returning auth errors. |
+
+> **Upcoming deprecations — plan migrations now:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **GitHub Copilot — Legacy AI Models** | Gemini 3.7 Flash, GPT-5.5, GPT-5.4, and Grok 4.5 are deprecated in GitHub Copilot. | **Oct 19, 2026** | Update any Copilot config or agent scripts specifying these model names to current supported models. |
+| **OpenAI `gpt-3.5-turbo-0125` + `gpt-4-0613`** | Legacy dated snapshot models shut down — calls return hard errors after deadline. | **Oct 23, 2026** | Migrate to current model aliases: `gpt-4o` or `gpt-4o-mini`. Audit all hardcoded model IDs. |
+| **OpenAI TTS Models** | All OpenAI text-to-speech models deprecated. No direct OpenAI replacement announced. | **Jan 6, 2027** | Plan migration to third-party TTS (ElevenLabs, Google Cloud TTS, AWS Polly, Deepgram). Audit all robot pipelines generating speech from OpenAI TTS endpoints. |
 
 ---
 
