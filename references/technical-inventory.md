@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-10-02
+**Last updated:** 2026-10-09
+
+---
+
+## Week of 2026-10-09 — Recon Summary
+
+**Major finds this week:** **New API: OpenAI Decisions API entered public beta October 6, 2026** — runs on GPT-6 Luna only; takes text/image input and returns typed structured answers 10× faster than the Responses API; pricing is $0.10/MTok input with **zero output-token charge** (input only, no cache-read/write/output billing), making it the cheapest structured-extraction endpoint OpenAI has ever shipped. **⚠️ CRITICAL — OpenAI Evals platform goes read-only October 31, 2026** (full shutdown November 30) — export all saved evals now; migration path is Promptfoo or OpenAI Datasets. **MCP Python SDK v2.0.0 released** — supports the 2026-07-28 spec natively; breaking changes: `mcp.server.fastmcp` module removed, `FastMCP` class renamed `MCPServer`, no compatibility alias — any robot using FastMCP will fail silently on the new SDK until patched; v1.x now maintenance-only (security fixes). **AWS Labs MCP batch (October 2, 2026):** new **DocumentDB MCP server** (MongoDB-compatible read/write ops), **Oracle Database MCP server**, and updated **Billing & Cost Management MCP server** now available in the awslabs/mcp monorepo. **AGNTCon + MCPCon North America** scheduled for October 22, 2026 in San Jose — likely new MCP server announcements from major vendors; watch for post-event drops. Platform changes this week: **YouTube cracking down on Shorts re-uploads** (Rene Ritchie announced reduced reach for channels re-uploading others' content with minimal transformation); **LinkedIn testing "For You" / "Network" feed split** (CPO Hari Srinivasan announced September 18 — For You = algorithmic strangers, Network = connections only; organic reach impact TBD but significant if rolled out); **Instagram originality enforcement fully active** (75% of US recommendations now from original posts, confirmed; visual fingerprinting detects 70%+ similarity to other creators' content). **Meshy deprecations:** meshy-5 model retires October 10 (tomorrow); lowpoly model retires October 30. No new major MCP servers launched this week outside of AWS Labs additions.
 
 ---
 
@@ -301,6 +307,52 @@ With Sora 2 dead as of September 24, 2026, Veo 3.1 is the confirmed best-in-clas
 
 ---
 
+## New APIs & Models — 2026-10-09
+
+### OpenAI Decisions API — Structured Extraction at 10× Speed (Public Beta, October 6, 2026)
+
+New dedicated API endpoint on GPT-6 Luna for turning text and image inputs into typed structured answers.
+
+| Detail | Value |
+|--------|-------|
+| **Model** | GPT-6 Luna only (at public beta launch) |
+| **Speed** | 10× faster than the Responses API (per OpenAI; no published benchmark) |
+| **Pricing** | $0.10/MTok input; **$0 output** — no cache-read, cache-write, or output-token charges |
+| **Regional premiums** | Apply on top of base price; long-context multipliers also apply |
+| **Status** | Public beta as of October 6, 2026; GA "in the coming weeks" per OpenAI docs |
+| **Access** | `developers.openai.com/api/docs/guides/decisions` |
+
+**Comparison to standard GPT-6 Luna rates:** Standard GPT-6 Luna = $0.10 input / $0.50 output. Decisions API charges the same input rate but zero output — the cost difference scales entirely with output token count. For structured extraction jobs with short outputs (booleans, enums, small JSON), the effective cost reduction is minimal. For long structured outputs, the savings are substantial.
+
+**Growth robot potential:** HIGH for classification, scoring, and structured extraction pipelines — lead quality scoring, content categorization, intent detection. Zero output cost removes the primary budget blocker for high-volume structured inference. Compare against Claude Haiku 4.5 ($1/$5) and Gemini 3.8 Flash ($0.75/$3.75) before committing; GPT-6 Luna Decisions wins on output-heavy jobs.
+
+---
+
+### MCP Python SDK v2.0.0 — Breaking Change Alert
+
+| Detail | Value |
+|--------|-------|
+| **Released** | October 2026 |
+| **What changed** | `mcp.server.fastmcp` module removed; `FastMCP` class renamed `MCPServer`; no compatibility alias. `pip install mcp` now installs 2.x. |
+| **Impact** | Any MCP server using `from mcp.server.fastmcp import FastMCP` will fail at import with no fallback. v1.x enters maintenance mode (security fixes only). |
+| **Action** | Before upgrading any robot's MCP dependency to 2.x: find-replace `mcp.server.fastmcp` → `mcp.server.mcpserver` and `FastMCP` → `MCPServer` in all server files. Pin to `mcp<2.0.0` for any server not yet migrated. |
+
+---
+
+### AWS Labs MCP — New Servers (October 2, 2026)
+
+Three additions to the awslabs/mcp monorepo in the October 2 release batch:
+
+| Server | What It Does | Install |
+|--------|-------------|---------|
+| **DocumentDB MCP** | MongoDB-compatible read/write ops on Amazon DocumentDB — find, insert, update, delete with connection_id-based session management. Write ops disabled by default; enable with startup flag. | `pip install awslabs.documentdb-mcp-server` (uvx recommended) |
+| **Oracle Database MCP** | SQL query execution against Oracle DB instances via AI agents. Part of the expanded cloud database coverage in the awslabs suite. | `pip install awslabs.oracle-database-mcp-server` |
+| **Billing & Cost Management MCP (updated)** | Updated with RI coverage/utilization data via Cost Explorer API; analyze historical spending, find optimization opportunities, estimate new workload costs. | `pip install awslabs.cost-analysis-mcp-server` |
+
+**Growth robot potential:** MEDIUM — relevant for enterprise clients on AWS; enables AI-driven cost audits and database operations without bespoke Lambda integrations.
+
+---
+
 ## New APIs & Models — 2026-10-02
 
 ### OpenAI GPT-6.1 Sol — New Flagship (Public Beta, October 2026)
@@ -317,6 +369,28 @@ OpenAI's newest model below GPT-6 Astra entered public beta. Significant speed a
 | **Growth robot potential** | HIGH — fastest and most cost-effective OpenAI model; computer use unlocks GUI automation robots that can operate web UIs without custom integrations |
 
 **Note:** Computer use via the Agents API is a meaningful unlock for growth robots — any web tool without an API can now be automated by pointing a computer-use agent at the browser interface.
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-10-09)
+
+> **⚠️ NEW THIS WEEK — Act before October 31:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI Evals Platform** | Read-only on October 31, 2026; full shutdown November 30, 2026. Announced June 3, 2026. Covers the Evals dashboard, Evals API, and all grader configurations. Existing eval content remains accessible during the read-only window. Migration path: Promptfoo or OpenAI Datasets. | **Oct 31 — read-only; Nov 30 — shutdown** | Export all saved evals, graders, and eval run history BEFORE October 31. Migrate eval pipelines to Promptfoo or OpenAI Datasets. See `langfuse.com/resources/engineering/migrate-from-openai-evals`. |
+| **Meshy `meshy-5` model** | Model retiring. Any API call specifying `meshy-5` will fail after this date. | **Oct 10, 2026 — TOMORROW** | Migrate calls to the current Meshy model ID immediately. |
+| **Meshy `lowpoly` model** | Model retiring. | **Oct 30, 2026** | Update any Meshy calls using the `lowpoly` style to the current replacement. |
+| **MCP Python SDK v1.x** | Enters maintenance-only mode (security fixes only); v2.0.0 is now the default installed by `pip install mcp`. **Breaking changes:** `mcp.server.fastmcp` module removed, `FastMCP` class renamed `MCPServer`, no compat shim. | **NOW — upgrade path required** | Pin to `mcp<2.0.0` for any server that hasn't been migrated to 2.x APIs. See migration notes in new APIs section above. |
+
+> **Previously logged — still active:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **Stripe MCP — Auth Migration** | Full-access secret keys and non-Agent-tagged restricted keys will stop working at `mcp.stripe.com`. | **Oct 31, 2026** | Migrate to Agent Key (restricted key tagged `agent`) or OAuth. |
+| **GitLab.com Rate Limits** | Free users and unauthenticated requests: preview enforcement Oct 7 + 14 (15:00–19:00 UTC), enforcement start Oct 19. | **Oct 19, 2026 — 10 DAYS** | Ensure all GitLab automation uses authenticated PATs. |
+| **GitHub Copilot — Legacy AI Models** | Gemini 3.7 Flash, GPT-5.5, GPT-5.4, Grok 4.5 deprecated. | **Oct 19, 2026** | Update Copilot config specifying these model names. |
+| **OpenAI `gpt-3.5-turbo-0125` + `gpt-4-0613`** | Legacy snapshot models shut down. | **Oct 23, 2026** | Migrate to `gpt-4o` or `gpt-4o-mini`. |
 
 ---
 
