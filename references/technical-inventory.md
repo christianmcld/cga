@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-10-09
+**Last updated:** 2026-10-16
+
+---
+
+## Week of 2026-10-16 — Recon Summary
+
+**Major finds this week:** **⚠️ CRITICAL — Meta One is live: clickable links in Instagram organic posts now cost $49.99/month** (Meta One Advanced tier, launched September 15, 2026). Free accounts and Essential plan users get zero inline clickable links in posts or Reels. Advanced ($49.99/mo) grants only **4 posts + 4 Reels per month** with links. Expert ($149.99/mo) = 8+8; Max ($499.99/mo) = 12+12. Profile links and Story link stickers remain free. This is the single largest paid-access barrier Meta has ever erected for organic growth and breaks every "link in post caption" robot strategy. **⚠️ NEW deprecation announced October 14: OpenAI GPT-4o and GPT-4.1 API shutdown January 14, 2027** — ~3-month notice, affecting all snapshot versions; fine-tuned models on these bases follow the same schedule. **October 23 shutdown is in 7 days** (gpt-3.5-turbo-0125, gpt-4-0613, gpt-4-turbo, gpt-4o-2024-05-13, o1, o1-pro, o3-mini, o4-mini — the largest single OpenAI sweep to date). **New tool: Hopscotch AI** (Product Hunt Sep 29) — single OpenAI-compatible API endpoint for 500+ AI models from OpenAI, Anthropic, Google, etc. with no platform fee or markup; freemium (prepay from $5 or BYOK); targeted at developers building multi-model pipelines. **Apollo GraphQL MCP Server 2.0.0** (October 5, 2026) — major version release with breaking changes; adds per-operation MCP tool annotation overrides (override tool names, descriptions, or disable tools per operation). Relevant for any growth robot using GraphQL APIs via MCP. **Facebook rolled out "Your Algorithm"** (Oct 13) — the same user-controlled topic preference feed system Instagram got in September is now on Facebook; affects reach for any Meta-distributed content where topic-clarity is weak. **Meta Ads update:** static-to-video in Advantage+ Creative is now GA (users can opt out before Oct 28 default-on), and Meta is testing a Business AI assistant for autonomous campaign adjustments. **Meta banned ByteDance/TikTok ads** (Oct 8) in 7 countries — Meta stopped accepting ads from ByteDance and any advertiser whose call-to-action drives traffic to TikTok. **LinkedIn Colleague Vouching in testing** — verified members can confirm mutual work/study history; enough confirmations add a verified-work-history badge to profiles. Eligibility: voucher must be connected 1+ year with 2FA enabled. Not yet widely rolled out.
 
 ---
 
@@ -307,6 +313,50 @@ With Sora 2 dead as of September 24, 2026, Veo 3.1 is the confirmed best-in-clas
 
 ---
 
+## New APIs & Tools — 2026-10-16
+
+### Meta One — Inline Link Tax (Launched September 15, 2026; Now Active)
+
+The single largest change to Instagram organic strategy in 2026. Clickable links inside post captions and Reels descriptions are now a **paid feature**.
+
+| Plan | Monthly Price | Links in Posts | Links in Reels |
+|------|--------------|----------------|----------------|
+| **Free / Essential** | $0 | **0** | **0** |
+| **Meta One Advanced** | $49.99/mo | 4 posts/month | 4 Reels/month |
+| **Expert** | $149.99/mo | 8/month | 8/month |
+| **Max** | $499.99/mo | 12/month | 12/month |
+
+- **Free alternatives that survive:** Profile bio link (free), Story link stickers (free), link-in-first-comment (free — not affected by Meta One). Facebook Pages on free tier get max 2 link posts/month.
+- **Impact on growth robots:** Any robot that auto-posts Instagram content with inline links will hit the monthly cap instantly. Must redesign all IG link-delivery flows to use bio link rotators, Story links, or first-comment links instead.
+- **Growth robot potential (new approach):** HIGH — link-in-first-comment automation robot, bio link rotator, Broadcast Channel as zero-cost link delivery layer.
+
+---
+
+### Hopscotch AI — 500+ AI Models, Single OpenAI-Compatible API
+
+- **Launched:** September 29, 2026 (Product Hunt)
+- **What it is:** Single API endpoint for 500+ AI models (OpenAI, Anthropic, Google, and others) — drop-in replacement with `base_url` swap on any OpenAI SDK client. Includes provider failover, routing profiles, spend limits, and usage analytics.
+- **Pricing:** Freemium — prepay from $5 OR bring your own provider API keys (BYOK, no gateway charge). No platform fee or markup when using own keys. First 250 PH users reportedly got $50 free credits at launch.
+- **vs GoModel / OpenRouter:** Hopscotch is hosted + BYOK with routing logic; GoModel is self-hosted MIT; OpenRouter is hosted with 5.5% markup. Hopscotch is the middle option — hosted convenience without OpenRouter's surcharge if you use own keys.
+- **Growth robot potential:** MEDIUM — useful for multi-model pipelines that want provider failover without self-hosting. Confirm free/BYOK tier terms at `hopscotchlabs.ai` before building on it.
+
+---
+
+### Apollo GraphQL MCP Server 2.0.0 (October 5, 2026)
+
+Major version of the `apollographql/apollo-mcp-server` — the standard MCP server for exposing GraphQL APIs to AI agents.
+
+| Detail | Value |
+|--------|-------|
+| **Version** | 2.0.0 (breaking changes) |
+| **Key addition** | Per-operation MCP tool annotation overrides — override tool names, descriptions, or disable specific tools at the operation level |
+| **Breaking changes** | See [GitHub releases](https://github.com/apollographql/apollo-mcp-server/releases) for migration notes |
+| **Install** | `npx @apollo/mcp-server` or see Apollo docs |
+
+**Growth robot potential:** MEDIUM — any robot using GraphQL APIs (Shopify Admin, GitHub, various enterprise platforms) via MCP should evaluate the 2.0 upgrade for the per-operation control. Vet breaking changes before upgrading existing integrations.
+
+---
+
 ## New APIs & Models — 2026-10-09
 
 ### OpenAI Decisions API — Structured Extraction at 10× Speed (Public Beta, October 6, 2026)
@@ -369,6 +419,31 @@ OpenAI's newest model below GPT-6 Astra entered public beta. Significant speed a
 | **Growth robot potential** | HIGH — fastest and most cost-effective OpenAI model; computer use unlocks GUI automation robots that can operate web UIs without custom integrations |
 
 **Note:** Computer use via the Agents API is a meaningful unlock for growth robots — any web tool without an API can now be automated by pointing a computer-use agent at the browser interface.
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-10-16)
+
+> **⚠️ NEW THIS WEEK — Act immediately:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI GPT-4o + GPT-4.1 API** | Shutdown announced October 14, 2026. All GA and snapshot versions (incl. `gpt-4o-2024-08-06`, `gpt-4o-2024-11-20`, `gpt-4.1`, `gpt-4.1-mini`, and all dated snapshots). Fine-tuned models on these bases follow the same schedule. | **Jan 14, 2027 — ~90 days** | Audit all hardcoded GPT-4o / GPT-4.1 model IDs. Plan migration to GPT-6 Luna or GPT-6.1 Sol before the deadline. Check fine-tuned model usage. |
+| **Meta One Inline Link Access** | Clickable links in Instagram post captions and Reels descriptions are now a paid feature (Meta One Advanced, $49.99/mo). Free accounts and Essential tier: 0 inline links. Advanced: 4 posts + 4 Reels/month. | **LIVE — launched Sep 15, 2026** | Redesign all IG content robots that place links in post bodies. Switch to: link-in-first-comment (free), bio link rotator, Story link stickers, Broadcast Channel for link delivery. |
+
+> **⚠️ IMMINENT — October 23 (7 days away):**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI Oct 23 batch shutdown** | `gpt-3.5-turbo-0125`, `gpt-4-0613`, `gpt-4-turbo`, `gpt-4o-2024-05-13`, `o1`, `o1-pro`, `o3-mini`, `o4-mini` — all return hard errors after October 23. Largest single-day OpenAI sweep. | **Oct 23, 2026 — 7 DAYS** | Migrate all remaining calls to current aliases: `gpt-4o` (for now), `gpt-6-luna`, `gpt-6.1-sol`. Audit every hardcoded model ID in the robot stack **today**. |
+
+> **Previously logged — still active:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI Evals Platform** | Read-only October 31; full shutdown November 30. | **Oct 31 — read-only** | Export all evals before Oct 31. |
+| **Stripe MCP Auth** | Agent Key or OAuth required at `mcp.stripe.com`. | **Oct 31, 2026** | Migrate to Agent Key or OAuth. |
+| **Meshy `lowpoly` model** | Retiring. | **Oct 30, 2026** | Update any lowpoly style calls. |
 
 ---
 
