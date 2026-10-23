@@ -1,7 +1,13 @@
 # CGA Technical Inventory — MCP Servers, APIs & Tools
 
 **Purpose:** The CGA's technical knowledge of what's available for building growth robots. Updated weekly.
-**Last updated:** 2026-10-16
+**Last updated:** 2026-10-23
+
+---
+
+## Week of 2026-10-23 — Recon Summary
+
+**Major finds this week:** **⚠️ CRITICAL — Anthropic API version `2026-10-21` ships BREAKING CHANGES (October 21, 2026)**: `temperature`, `top_p`, and `top_k` removed — requests using the `2026-10-21` version header with these fields return `400`; authentication header changes to `Authorization: Bearer` format; Text Completions removed from TypeScript, Go, Java, and Ruby SDKs and CLI; admin field renames (`roles` → `role_ids`); context compaction renamed from `compactionControl` to `context_management` (add `anthropic-beta: compact-2026-01-12`, set trigger threshold ≥ 50,000 tokens). **Claude Sonnet 4.5 retiring November 30** — migrate all `claude-sonnet-4-5` calls to `claude-sonnet-5-5`. Bedrock only supports `2026-10-21` for Claude 4.7+ models. **Existing pinned integrations (`2023-06-01` etc.) continue working — no action needed for unupgraded robot code.** **OpenAI Decisions API reached GA (October 22, 2026)**: question limit raised from 200 to 400 per request; 12-hour prompt caching added (cache writes cost 2.5× input token rate); project-level service tier restrictions added October 21. **7 MCP servers confirmed this week:** **Azure MCP Server 3.0** (stable, Oct 14) adds Azure Backup, Resilience Management, Terraform tooling (provider docs, aztfexport, conftest), Optimization (cost/VM alternatives), and Azure SRE Agent (55 commands in preview); breaking changes: opt-in structured output, unknown parameters rejected, new storage accounts disable Shared Key auth by default. **CryptoQuant MCP** (Oct 22) — 245+ on-chain endpoints (BTC/ETH/ALT metrics, MVRV, SOPR, NUPL, funding rates, whale activity, exchange flows, up to 1,000 data points/request) via remote `https://mcp.cryptoquant.com/mcp` or `npx @cryptoquant_official/mcp`; paid API tier required. **Airtable MCP** (official, now confirmed) — remote OAuth at `mcp.airtable.com/mcp`, full CRUD, max 10 records/create, all plans including free. **Zapier MCP** (official, `mcp.zapier.com`) — single endpoint exposing 7,000+ app integrations via existing Zaps; largest MCP tool surface available without building a custom server. **Make (Integromat) MCP** (official) — list/run/create/modify scenarios, retrieve execution logs; free plan (1,000 ops/month) works. **Financial Cents MCP** (Oct 20) — accounting practice management for CPA firms (tasks, invoices, client docs, close status); works with Claude/ChatGPT/Gemini. **TikTok Agentic Hub** (GA June 30, 2026 — now fully documented) — MCP-native AI Skills for TikTok Ads creation, management, analysis, and optimization without custom API wrappers or credentials; 14+ launch partners including HubSpot, Wix, Constant Contact. **Adobe Marketo Engage MCP** (GA Oct 9, 2026) — 100+ operations (forms, programs, smart campaigns, leads, emails, snippets, lists); hosted, no install; enterprise B2B robot opportunity. **Salesforce Marketing Cloud MCP Winter '27** adds 40 new tools covering Automation Studio, Campaigns, and Data Extensions. **Platform changes:** X added AI read-time/dwell-time scoring to Phoenix ranking model (Oct 20) — posts people actually finish reading earn distribution lift on top of existing engagement weights. **TikTok launched AI semantic keyword filtering** — blocking a keyword semantically blocks related terms and synonyms; brand topics can be filtered without an exact name match. **Instagram expanded "Your Algorithm" to the main feed** (was Reels/Explore only — now all three Instagram surfaces respond to topic declarations). **Instagram began enforcing AI-generated profile labels** — "AI creator" label replaced by "AI-generated profile" with algorithmic reach reduction for unlabeled AI-persona accounts. **⚠️ OpenAI Oct 23 batch shutdown executes TODAY**: `gpt-3.5-turbo-0125`, `gpt-4-0613`, `gpt-4-turbo`, `gpt-4o-2024-05-13`, `o1`, `o1-pro`, `o3-mini`, `o4-mini` all return hard errors as of October 23 — any robot still calling these model IDs is now broken.
 
 ---
 
@@ -114,6 +120,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Amplitude** ⭐ NEW (Jan 26, 2026) | Analytics event data — query events, user behavior funnels, charts, cohorts, experiment results. Official remote MCP. Launched January 26 as part of the largest single-day MCP expansion of 2026. Ships MCP Apps dashboard UI. | Analytics intelligence robot — pull conversion funnel data, cohort analysis, A/B experiment results directly into Claude sessions | Remote OAuth: Amplitude platform settings. GA January 26, 2026. |
 | **Hex** ⭐ NEW (Jan 26, 2026) | Data analytics notebooks with MCP Apps interactive dashboard UI — query datasets, generate charts, run notebook cells, share analyses. Official remote MCP. | Data analysis robot — run data queries and generate interactive dashboards without leaving Claude | Remote OAuth: Hex platform settings. GA January 26, 2026. |
 | **Semrush** ⭐ NEW | Keyword overview, domain analytics, backlink data, position tracking | Competitive SEO research, keyword monitoring | `npx -y github:mrkooblu/semrush-mcp` |
+| **CryptoQuant** ⭐ NEW (Oct 22, 2026) | 245+ on-chain endpoints — BTC/ETH/ALT/stablecoin metrics (MVRV, SOPR, NUPL, realized price), funding rates, exchange flows, whale activity, open interest. Up to 1,000 data points per request. | Crypto analytics robot — on-chain signal monitoring, whale alert bots, DeFi dashboard feeds, trading signal pipelines | Remote: `https://mcp.cryptoquant.com/mcp`; Local: `npx @cryptoquant_official/mcp` (Node.js v18+, set `CRYPTOQUANT_API_KEY`). Paid API tier required. Launched Oct 22, 2026. |
 
 ### CRM & Sales Intelligence
 | MCP | What It Does | Growth Robot Use | Install |
@@ -125,6 +132,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Apollo.io** ⭐ NEW | Prospect search, contact enrichment, company enrichment, sequences, outreach tracking — 45 tools | Lead mining, contact enrichment, outreach sequencing | `npx -y @inferensys/apollo-io-mcp` (free tier available) |
 | **Clay** ⭐ NEW (Jan 26, 2026) | Data enrichment, contact research, GTM workflow automation with MCP Apps interactive dashboard UI. Ships as official remote MCP. Read + write on Clay tables and enrichment waterfalls. | Contact enrichment robot with live UI feedback; GTM automation workflows that combine data lookups, enrichment, and outreach sequencing in one Claude session | Remote OAuth: Clay platform settings. GA January 26, 2026. |
 | **Kit (ConvertKit)** ⭐ NEW (OFFICIAL) | 13 tools — full Kit V4 API: analytics, subscribers, forms, sequences, broadcasts, commerce, tags, segments, bulk operations. Auth handled automatically. Separate Kit Developer Docs MCP for building integrations. | Email subscriber management robot, list segmentation, broadcast automation, revenue tracking from email sales | Remote OAuth: `developers.kit.com/mcp` (all Kit plans) |
+| **Adobe Marketo Engage** ⭐ NEW (Oct 9, 2026) | 100+ operations — forms, programs, smart campaigns, leads, emails, snippets, lists, folders. Full Marketo Engage API. Official Adobe hosted MCP; works with Claude, ChatGPT, and Gemini. | Enterprise B2B robot — lead management, smart campaign automation, program management, email template automation for enterprise Marketo clients | Hosted (no install): configure via `experienceleague.adobe.com/en/docs/marketo-developer/marketo/mcp-server`. Requires Marketo API credentials. GA October 9, 2026. |
 
 ### Email, Outreach & Messaging
 | MCP | What It Does | Growth Robot Use | Install |
@@ -188,6 +196,7 @@ These are live connections the CGA can use during sessions to pull data, push co
 | **Cloudflare** ⭐ NEW | 2,500+ endpoints — DNS, Workers, R2 storage, Pages, Zero Trust, KV, D1, WAF | Full infrastructure automation, edge function deployment, CDN management | Remote OAuth: `https://mcp.cloudflare.com`; or `npx -y @cloudflare/mcp-server` |
 | **Vercel** ⭐ NEW | Projects, deployment status, env vars, domains, logs, team settings | Deployment robot, env var management, monitoring | `claude mcp add --transport http vercel https://mcp.vercel.com` (OAuth, no local install) |
 | **AWS** ⭐ NEW (OFFICIAL) | Full AWS API — CloudFormation, ECS, S3, Lambda, IAM, CDK, docs, cost management | Cloud infrastructure automation, serverless deployment, cost monitoring | `pip install awslabs.core-mcp-server` (GA May 2026; uvx recommended) |
+| **Azure MCP Server 3.0** ⭐ UPDATED (stable, Oct 14, 2026) | Full Azure cloud management — Azure Backup, Resilience Management, Terraform tools (provider docs, aztfexport, conftest validation), Optimization (cost recommendations, alternative VM configs), Azure SRE Agent (55 commands, preview). Breaking changes in 3.0: opt-in structured output, unknown parameters now rejected, new storage accounts disable Shared Key auth by default. | Azure infrastructure robot — cost optimization, resilience checks, Terraform validation, backup management, SRE automation for Azure-hosted growth robot infra | `pip install azure-mcp-server` (update existing installations). Stable 3.0 released October 14, 2026. |
 | **Box** ⭐ NEW (Jan 26, 2026) | Enterprise content management — files, folders, search, metadata, permissions, workflows, collaboration. Official remote MCP. | Enterprise document management robot — search and retrieve content, automate file operations, manage permissions at scale for enterprise clients | Remote OAuth: Box Developer Console. GA January 26, 2026. |
 | **Firebase** ⭐ NEW | Firestore, Auth, Storage, Functions, Hosting, Realtime DB — full read/write | Database robots, user management, serverless automation | `npx -y firebase-tools@latest mcp` (built into firebase-tools CLI) |
 | **Kubernetes / OpenShift** ⭐ NEW (Aug 12, 2026) | Full CRUD on K8s resources (pods, deployments, services); log/metric/event queries; Helm ops; OpenShift support. Uses existing kubeconfig. | Cluster management robot, auto-scaling automation, log analysis, cost monitoring for self-hosted growth robot infra | `npx @kubernetes/mcp-server` (set `KUBECONFIG`); `github.com/containers/kubernetes-mcp-server` (Apache-2.0, v0.0.65) |
@@ -197,6 +206,9 @@ These are live connections the CGA can use during sessions to pull data, push co
 |-----|-------------|-----------------|---------|
 | **n8n** ⭐ NEW | Trigger existing workflows, build/edit workflows (v2.13+), all n8n nodes accessible | AI-triggered automation robot — kick off any n8n workflow from Claude | Built-in to n8n — enable in settings, point MCP client at n8n instance URL |
 | **Gumloop MCP Hub** ⭐ NEW | 100+ fully hosted MCP servers for Salesforce, HubSpot, GitHub, Jira, Slack, Loops, and more. Free plan includes all hosted servers. Pro ($37/mo) adds custom MCP server proxying. No-code AI agent builder + MCP access in one platform. | AI agent orchestration robot, connect agents to 100+ apps without managing server infra; free tier is generous for small-scale growth robots | `gumloop.com/mcp` — OAuth connection, no local install. Free plan: 5K credits/month, 1 active trigger, 5 concurrent agent runs |
+| **Zapier** ⭐ NEW (OFFICIAL) | Single endpoint for 7,000+ app integrations via existing Zaps — `execute_zapier_read_action` and `execute_zapier_write_action` trigger any Zap as an MCP tool call. No SSE support. Requires existing Zaps to be built. | Universal integration robot — connect AI agents to any of 7,000+ apps without building individual MCP connectors; fastest path to action on any platform with an existing Zap | Remote: `mcp.zapier.com` (configure in Claude Code MCP settings with Zapier API key; tied to standard Zapier plan) |
+| **Make (Integromat)** ⭐ NEW (OFFICIAL) | List, run, create-from-blueprint, and modify Make scenarios; retrieve execution logs. All Make module types accessible via agent control. | Automation orchestration robot — AI-driven scenario execution and dynamic workflow creation; pairs with agents for adaptive pipeline generation | Platform settings at `make.com` (account required). Free plan: 1,000 ops/month. |
+| **Airtable** ⭐ NEW (OFFICIAL) | Full CRUD on any Airtable base — create, read, update, delete records; natural-language queries and aggregations. Max 10 records per create call. Standard Airtable API rate limits apply. | Database/CRM robot — read and write to Airtable tables used as lightweight CRM, content calendar, lead lists, or any ops database | Remote OAuth: `mcp.airtable.com/mcp` (all plans including free) |
 
 ### REST-to-MCP Conversion Tooling
 | Tool | What It Does | Growth Robot Use | Install |
@@ -313,6 +325,43 @@ With Sora 2 dead as of September 24, 2026, Veo 3.1 is the confirmed best-in-clas
 
 ---
 
+## New APIs & Models — 2026-10-23
+
+### Anthropic API `2026-10-21` — Breaking Changes (October 21, 2026)
+
+New major SDK versions shipped alongside the `2026-10-21` API version. Most impactful changes for growth robot stacks:
+
+| Change | Detail | Migration Path |
+|--------|--------|---------------|
+| `temperature`/`top_p`/`top_k` removed | Sending these params with the `2026-10-21` version header returns `400`. | Remove these params from all robot code using the new version. |
+| `Authorization: Bearer` header | API keys now use `Authorization: Bearer sk-ant-...` format. Any proxy or middleware inspecting the old `x-api-key` header breaks. | Update custom HTTP clients, proxy configs, or header-inspection middleware. |
+| Text Completions removed from SDKs | `client.completions.create()` removed from TypeScript, Go, Java, Ruby SDKs and CLI. | Migrate to `client.messages.create()`. |
+| `compactionControl` → `context_management` | Context compaction config renamed. Add `anthropic-beta: compact-2026-01-12` header. Trigger threshold must be ≥ 50,000 tokens. | Update any robot that configures context compaction. |
+| Admin field renames | `roles` → `role_ids` and other admin/analytics fields renamed. | Update admin API calls. |
+
+**Pinned integrations safe:** Integrations pinned to older API versions (e.g., `2023-06-01`) continue working unchanged. Only audit code when upgrading to new SDK major versions.
+
+**Claude Sonnet 4.5 retiring November 30, 2026:**
+- All `claude-sonnet-4-5` aliases return errors after November 30.
+- Replacement: `claude-sonnet-5-5`
+- 38 days from today — schedule migration now.
+
+---
+
+### OpenAI Decisions API — General Availability (October 22, 2026)
+
+The Decisions API entered GA with these changes from the public beta:
+
+| Detail | Beta | GA |
+|--------|------|----|
+| Max questions/request | 200 | **400** |
+| Prompt caching | Not available | **12-hour cache** (cache writes cost 2.5× input token rate) |
+| Service tier restrictions | None | Project-level restrictions added Oct 21 |
+
+**GA stability means it is now safe to build production robots on the Decisions API.** Zero output-token cost + 12-hour prompt caching = significant cost reduction for repeated structured extraction jobs. Compare against Claude Haiku 5.5 and Gemini for your specific workload before committing.
+
+---
+
 ## New APIs & Tools — 2026-10-16
 
 ### Meta One — Inline Link Tax (Launched September 15, 2026; Now Active)
@@ -419,6 +468,32 @@ OpenAI's newest model below GPT-6 Astra entered public beta. Significant speed a
 | **Growth robot potential** | HIGH — fastest and most cost-effective OpenAI model; computer use unlocks GUI automation robots that can operate web UIs without custom integrations |
 
 **Note:** Computer use via the Agents API is a meaningful unlock for growth robots — any web tool without an API can now be automated by pointing a computer-use agent at the browser interface.
+
+---
+
+## Critical API Deprecations & Shutdowns (Week of 2026-10-23)
+
+> **⚠️ EXECUTING TODAY — October 23, 2026:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI Oct 23 batch shutdown** | `gpt-3.5-turbo-0125`, `gpt-4-0613`, `gpt-4-turbo`, `gpt-4o-2024-05-13`, `o1`, `o1-pro`, `o3-mini`, `o4-mini` all return hard errors as of today. Largest single-day OpenAI model sweep. | **TODAY — DEAD** | Any robot still calling these model IDs is broken NOW. Migrate to `gpt-4o` (transitional), `gpt-6-luna`, or `gpt-6.1-sol`. |
+
+> **⚠️ NEW THIS WEEK — Act immediately:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **Anthropic API `2026-10-21`** | Breaking changes: `temperature`/`top_p`/`top_k` removed; `Authorization: Bearer` header required; Text Completions removed from SDKs; admin field renames (`roles` → `role_ids`); `compactionControl` → `context_management`. Opus 5.5 Fast Mode beta header no longer required (honored if sent). | **LIVE — Oct 21, 2026** | Existing pinned integrations safe. Only audit before upgrading SDK to new major versions. |
+| **Claude Sonnet 4.5** | Retiring November 30, 2026. | **Nov 30 — 38 DAYS** | Migrate `claude-sonnet-4-5` → `claude-sonnet-5-5` before November 30. |
+
+> **Previously logged — imminent:**
+
+| API / Service | What Changed | Status | Action Required |
+|---|---|---|---|
+| **OpenAI GPT-4o + GPT-4.1** | Announced Oct 14. All snapshots and fine-tuned versions. | **Jan 14, 2027 — ~83 DAYS** | Migrate to GPT-6 Luna or GPT-6.1 Sol. |
+| **OpenAI Evals Platform** | Read-only October 31; full shutdown November 30. | **Oct 31 — 8 DAYS** | Export all evals now. |
+| **Stripe MCP Auth** | Agent Key or OAuth required at `mcp.stripe.com`. | **Oct 31, 2026 — 8 DAYS** | Migrate to Agent Key or OAuth. |
+| **Meshy `lowpoly` model** | Retiring. | **Oct 30, 2026 — 7 DAYS** | Update any lowpoly style calls. |
 
 ---
 
